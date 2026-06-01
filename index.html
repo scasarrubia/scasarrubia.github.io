@@ -1,328 +1,428 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-    <head>
-        <title>INSPIRACION | Muestras de avances mundo de las ciencias COMFAMA</title>
-        <!-- Required meta tags always come first -->
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta http-equiv="x-ua-compatible" content="ie=edge" />
-        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Museo de la Extinción — Big Five</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/museo-extincion.css">
 
-        <!-- Cargando fuentes -->
-        <link
-            href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,700italic"
-            rel="stylesheet"
-            type="text/css" />
+</head>
+<body>
 
-        <!-- Cargando iconos -->
-        <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">☠ Museo de la Extinción</div>
+  <ul class="nav-links">
+    <li><a href="#extinciones">Las Big Five</a></li>
+    <li><a href="#linea">Línea del Tiempo</a></li>
+    <li><a href="#evaluacion">Evaluación</a></li>
+  </ul>
+</nav>
 
-        <!-- Carga de Galeria de imágenes -->
-        <link rel="stylesheet" href="css/owl.carousel.min.css" />
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-skull">☠</div>
+  <p class="hero-eyebrow">Grado 9° · Aprendizaje Basado en Proyectos</p>
+  <h1 class="hero-title">Museo de la <span>Extinción</span></h1>
+  <p class="hero-subtitle">Las Big Five · Las Cinco Grandes</p>
+  <p class="hero-desc">
+    Cinco cataclismos que redefinieron la vida sobre la Tierra.
+    Cinco momentos en que la evolución fue puesta a prueba, y algunos la superaron.
+  </p>
+  <p class="scroll-hint">▼ &nbsp; Explora &nbsp; ▼</p>
+</div>
 
-        <!-- Carga de archivos css -->
-        <link rel="stylesheet" href="css/bootstrap.css" />
-        <link rel="stylesheet" href="css/animate.min.css" />
-        <link rel="stylesheet" href="css/estilos.css" />
-    </head>
+<div class="divider"></div>
 
-    <body>
-        <section class="bienvenidos">
-            <header class="encabezado navbar-fixed-top" role="banner" id="encabezado">
-                <div class="container">
-                    <a href="index.html" class="logo inv">
-                        <img src="images/comfama.svg" alt="Logo del sitio" />
-                    </a>
+<!-- EXTINCIONES SECTION -->
+<div id="extinciones" class="fw-dark">
+  <section>
+    <p class="section-label reveal">Las cinco grandes extinciones masivas</p>
+    <h2 class="section-title reveal">Las <span>Big Five</span></h2>
+    <p class="section-intro reveal">
+      En los últimos 500 millones de años, la vida en la Tierra ha enfrentado cinco grandes catástrofes de extinción masiva.
+      Cada una eliminó más del 60% de las especies, y cada una abrió la puerta a nuevas formas de vida.
+    </p>
 
-                    <button
-                        type="button"
-                        class="boton-buscar invisible"
-                        data-toggle="collapse"
-                        data-target="#bloque-buscar"
-                        aria-expanded="false">
-                        <i class="fa fa-search" aria-hidden="true"></i>
-                    </button>
-                    <button
-                        type="button"
-                        class="boton-menu hidden-md-up"
-                        data-toggle="collapse"
-                        data-target="#menu-principal"
-                        aria-expanded="false">
-                        <i class="fa fa-bars" aria-hidden="true"></i>
-                    </button>
+    <div class="extinctions-grid reveal">
 
-                    <form action="#" id="bloque-buscar" class="collapse invisible">
-                        <div class="contenedor-bloque-buscar">
-                            <input type="text" placeholder="Buscar..." />
-                            <input type="submit" value="Buscar" />
-                        </div>
-                    </form>
-
-                    <nav id="menu-principal" class="collapse">
-                        <ul>
-                            <li class="active"><a href="index.html">Inicio</a></li>
-                            <li><a href="#">Descargas</a></li>
-                            <!--<li><a href="descargas.html">Descargas</a></li>-->
-                            <!--<li><a href="servicios.html">Servicios</a></li>-->
-                            <li><a href="contacto.html">Contacto</a></li>
-                        </ul>
-                    </nav>
-                </div>
-            </header>
-
-            <div class="texto-encabezado text-xs-center">
-                <div class="container">
-                    <h1 class="display-4 wow bounceIn">Muestras mundo de las ciencias</h1>
-                    <p class="wow bounceIn" data-wow-delay=".3s">
-                        Descarga vectores y conoce un poco de los proyectos realizados en el programa de Inpiración
-                        <span>COMFAMA</span> y su mundo de ciencias.
-                    </p>
-                    <a href="contacto.html" class="btn btn-primary btn-lg">Ponte en contacto</a>
-                </div>
+      <!-- 1. ORDOVÍCICO-SILÚRICO -->
+      <div class="era-card era-ordovician" onclick="toggleEra(this)">
+        <div class="era-header">
+          <div class="era-number">01</div>
+          <div class="era-info">
+            <div class="era-name">Extinción Ordovícico-Silúrico</div>
+            <div class="era-meta">Hace ~443 millones de años</div>
+          </div>
+          <div class="era-badge" style="color:#7abfb0">~86% de especies</div>
+          <div class="era-toggle">▼</div>
+        </div>
+        <div class="era-body">
+          <div class="era-content">
+            <div class="era-block">
+              <h4>¿Qué ocurrió?</h4>
+              <p>Una glaciación masiva enfrió los mares y bajó drásticamente el nivel del mar. Las aguas poco profundas, hogar de la mayoría de vida marina, desaparecieron. Se considera la <em>segunda mayor extinción</em> de la historia.</p>
             </div>
-            <div class="flecha-bajar text-xs-center">
-                <a data-scroll href="#agencia"> <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <div class="era-block">
+              <h4>Datos clave</h4>
+              <ul>
+                <li>Duró unos 2 millones de años</li>
+                <li>Dos pulsos de extinción distintos</li>
+                <li>El continente Gondwana se desplazó al polo sur</li>
+                <li>Casi toda la vida era marina (aún no existía vida terrestre compleja)</li>
+              </ul>
             </div>
-        </section>
-        <section class="agencia p-y-1" id="agencia">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-8 col-xl-9 wow bounceIn" data-wow-delay=".3s">
-                        <h2 class="h3 text-xs-center text-md-left font-weight-bold">
-                            Explorando la robótica desde el mundo de las ciencias
-                        </h2>
-                        <p class="text-justify">
-                            El programa apoya y aporta las herramientas necesarios para que todos los niños, niñas y
-                            jovenes aprendan de ciencias a traves del juego y la curiosidad.
-                        </p>
-                        <p class="text-justify">
-                            Ponemos al alcance de los lectores de este sitio, todos los programas utilizados y los
-                            vectores creados durente el trancurso del ciclo de aprendisaje de la maquina de corte por
-                            CO2.
-                        </p>
-                    </div>
-                    <div class="col-md-4 col-xl-3 wow bounceIn" data-wow-delay=".6s">
-                        <img src="images/CO2.jpg" alt="Maquina CO2" />
-                    </div>
-                </div>
+            <div class="era-block">
+              <h4>Extinción estimada</h4>
+              <span class="extinction-pct">~86%</span>
+              <p style="font-size:0.85rem; color:var(--fog)">de todas las especies marinas desaparecieron</p>
             </div>
-        </section>
-        <section class="tu-mejor-eleccion p-y-1">
-            <div class="container">
-                <h2 class="h3 text-xs-center font-weight-bold">¿Que aprendemos <span>Desde la programación?</span></h2>
-                <p class="text-xs-center">Desarrollo web y Apps a medida de nustras necesidades</p>
-
-                <div class="row">
-                    <ul class="col-xs-6 col-lg-4 text-xs-center text-lg-left">
-                        <li class="wow zoomIn" data-wow-duration=".3s" data-wow-delay=".3s">
-                            <i class="fa fa-briefcase" aria-hidden="true"></i>
-
-                            <div class="contenedor-eleccion">
-                                <h4>Aplicaciones Web</h4>
-                                <p class="hidden-md-down">Desarrollo web usando HTML, CSS3 Y Java Script.</p>
-                            </div>
-                        </li>
-                        <li class="wow zoomIn" data-wow-duration=".3s" data-wow-delay=".7s">
-                            <i class="fa fa-bullhorn" aria-hidden="true"></i>
-                            <div class="contenedor-eleccion">
-                                <h4>Aplicaciones con Arduino</h4>
-                                <p class="hidden-md-down">
-                                    Uso de Arduino como herramienta de aprendizaje en Hardware y Software.
-                                </p>
-                            </div>
-                        </li>
-                        <li class="wow zoomIn" data-wow-duration=".3s" data-wow-delay="1.1s">
-                            <i class="fa fa-comment-o" aria-hidden="true"></i>
-
-                            <div class="contenedor-eleccion">
-                                <h4>Raspberry Pi</h4>
-                                <p class="hidden-md-down">
-                                    Uso de Raspberry Pi, como herramienta de aprendizaje e internet de las cosas.
-                                </p>
-                            </div>
-                        </li>
-                    </ul>
-
-                    <div class="hidden-md-down col-lg-4">
-                        <img src="images/mundo.svg" alt="Mundo movil" />
-                    </div>
-
-                    <ul class="col-xs-6 col-lg-4 text-xs-center text-lg-right">
-                        <li class="wow zoomIn" data-wow-duration=".3s" data-wow-delay=".5s">
-                            <i class="fa fa-calendar" aria-hidden="true"></i>
-                            <div class="contenedor-eleccion">
-                                <h4>Juegos en Scratch</h4>
-                                <p class="hidden-md-down">
-                                    Aprender la lógica de programación usando Scratch para la creación de videojuegos.
-                                </p>
-                            </div>
-                        </li>
-                        <li class="wow zoomIn" data-wow-duration=".3s" data-wow-delay=".9s">
-                            <i class="fa fa-check-square-o" aria-hidden="true"></i>
-                            <div class="contenedor-eleccion">
-                                <h4>Lógica de programación</h4>
-                                <p class="hidden-md-down">
-                                    App inventor como plataforma de aprendisaje para aplicaciones moviles e integracion
-                                    Arduino.
-                                </p>
-                            </div>
-                        </li>
-                        <li class="wow zoomIn" data-wow-duration=".3s" data-wow-delay="1.3s">
-                            <i class="fa fa-cogs" aria-hidden="true"></i>
-                            <div class="contenedor-eleccion">
-                                <h4>Funciones a medida</h4>
-                                <p class="hidden-md-down">
-                                    Buscamos herramientas que nos ayuden a llevar a cabo nuestros proyectos.
-                                </p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+            <div class="era-block">
+              <h4>¿Qué sobrevivió?</h4>
+              <ul>
+                <li>Algunos braquiópodos y corales</li>
+                <li>Grupos de moluscos primitivos</li>
+                <li>Organismos de aguas profundas</li>
+                <li>Primeras plantas terrestres simples</li>
+              </ul>
             </div>
-        </section>
+          </div>
+        </div>
+      </div>
 
-        <main class="servicios p-y-1">
-            <div class="container">
-                <h2 class="text-xs-center font-weight-bold">Mundo de las ciencias</h2>
-
-                <div class="row">
-                    <article class="col-md-4 wow bounceInLeft" data-wow-delay=".3s">
-                        <img src="images/servicio-1.svg" alt="Servicio Desarrollo de Aplicaciones Mobiles" />
-                        <h3><a href="#"> Robótica </a></h3>
-                        <p class="hidden-sm-down">
-                            Desarrollamos aplicaciones móviles y plataformas web. Nuestra principal cualidad está en el
-                            desarrollo de software a medida de tus necesidades.
-                        </p>
-                        <a href="#" class="btn btn-secondary hidden-sm-down">Más información</a>
-                    </article>
-
-                    <article class="col-md-4 wow bounceInUp" data-wow-delay=".6s">
-                        <img src="images/servicio-2.svg" alt="Servicio Consultoría Tecnológica" />
-                        <h3><a href="#"> Astronomía </a></h3>
-                        <p class="hidden-sm-down">
-                            Tiene como objetivo promover en los estudiantes los pensamientos de orden superior,
-                            enfocados en el saber desde el hacer y el conocer, generando capacidades y habilidades que
-                            le permiten al estudiante desarrollarse de manera integra en un entorno seguro.
-                        </p>
-                        <a href="#" class="btn btn-secondary hidden-sm-down">Más información</a>
-                    </article>
-
-                    <article class="col-md-4 wow bounceInRight" data-wow-delay="1s">
-                        <img src="images/servicio-3.svg" alt="Servicio Marketing y publicidad Movil" />
-                        <h3>
-                            <a href="https://gamma.app/docs/Modalidad-Tecno-ambiental-atijy77kaluokbk?mode=doc">
-                                Tecno Ambiental</a
-                            >
-                        </h3>
-                        <p class="hidden-sm-down">
-                            Promueve la sostenibilidad a través de la agricultura orgánica, el reciclaje y la
-                            elaboración de manualidades, creando un espacio para aprender y conectar con la naturaleza.
-                        </p>
-                        <a
-                            href="https://gamma.app/docs/Modalidad-Tecno-ambiental-atijy77kaluokbk?mode=doc"
-                            class="btn btn-secondary hidden-sm-down"
-                            >Más información</a
-                        >
-                    </article>
-                </div>
+      <!-- 2. DEVÓNICO -->
+      <div class="era-card era-devoniano" onclick="toggleEra(this)">
+        <div class="era-header">
+          <div class="era-number">02</div>
+          <div class="era-info">
+            <div class="era-name">Extinción del Devónico Tardío</div>
+            <div class="era-meta">Hace ~375–359 millones de años</div>
+          </div>
+          <div class="era-badge" style="color:#a8c878">~75% de especies</div>
+          <div class="era-toggle">▼</div>
+        </div>
+        <div class="era-body">
+          <div class="era-content">
+            <div class="era-block">
+              <h4>¿Qué ocurrió?</h4>
+              <p>Una extinción prolongada y en varios pulsos. El enfriamiento del clima y la reducción del oxígeno disuelto en los mares devastaron la vida marina. Las nuevas plantas terrestres grandes también podrían haber contribuido al cambio climático.</p>
             </div>
-        </main>
-
-        <section class="ultimos-proyectos p-y-1">
-            <div class="container">
-                <h2 class="text-xs-center font-weight-bold">Algunos proyectos</h2>
-
-                <div class="owl-carousel">
-                    <a href="#">
-                        <h4>Emsamble Piezas</h4>
-                        <img src="images/carro.jpg" alt="carro" />
-                    </a>
-
-                    <a href="#">
-                        <h4>Maquina Arcade</h4>
-                        <img src="images/arcade.jpg" alt="Arcade" />
-                    </a>
-
-                    <a href="#">
-                        <h4>Circuitos y Motores</h4>
-                        <img src="images/carro%20primaria.jpg" alt="App Pizza Perú" />
-                    </a>
-
-                    <a href="#">
-                        <h4>Maquina Compuesta</h4>
-                        <img src="images/carro%20primaria%202.jpg" alt="App Muebles Hoy" />
-                    </a>
-
-                    <a href="#">
-                        <h4>Energia Solar</h4>
-                        <img src="images/solar.jpg" alt="App Clima Perú" />
-                    </a>
-
-                    <a href="#">
-                        <h4>Pensamiento Crítico</h4>
-                        <img src="images/grupo.jpg" alt="App  Playa" />
-                    </a>
-                </div>
+            <div class="era-block">
+              <h4>Datos clave</h4>
+              <ul>
+                <li>Se extendió por millones de años (no fue instantánea)</li>
+                <li>Los arrecifes de coral casi desaparecieron completamente</li>
+                <li>Afectó principalmente a la vida marina tropical</li>
+                <li>Las primeras plantas con raíces profundas alteraron el suelo</li>
+              </ul>
             </div>
-        </section>
-        <footer class="piedepagina p-y-1" role="contentinfo">
-            <div class="container">
-                <p class="m-b-0">Desarrolladores</p>
-                <p>Aldrey Alvares Vanegas y Elias Brito Pino</p>
-                <ul class="redes-sociales">
-                    <li>
-                        <a href="#"><i class="fa fa-facebook" aria-hidden="true"> </i> </a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i> </a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-youtube" aria-hidden="true"></i> </a>
-                    </li>
-                </ul>
+            <div class="era-block">
+              <h4>Extinción estimada</h4>
+              <span class="extinction-pct">~75%</span>
+              <p style="font-size:0.85rem; color:var(--fog)">de las especies desaparecieron</p>
             </div>
-        </footer>
+            <div class="era-block">
+              <h4>¿Qué sobrevivió?</h4>
+              <ul>
+                <li>Los primeros tetrápodos (antepasados de los anfibios)</li>
+                <li>Algunos tiburones primitivos</li>
+                <li>Helechos y plantas terrestres</li>
+                <li>Grupos de peces de agua dulce</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        <a data-scroll class="ir-arriba" href="#encabezado"
-            ><i class="fa fa-arrow-circle-up" aria-hidden="true"> </i>
-        </a>
+      <!-- 3. PERMO-TRIÁSICO -->
+      <div class="era-card era-permo" onclick="toggleEra(this)">
+        <div class="era-header">
+          <div class="era-number">03</div>
+          <div class="era-info">
+            <div class="era-name">La Gran Muerte: Permo-Triásico</div>
+            <div class="era-meta">Hace ~252 millones de años</div>
+          </div>
+          <div class="era-badge" style="color:#e05050">~96% de especies</div>
+          <div class="era-toggle">▼</div>
+        </div>
+        <div class="era-body">
+          <div class="era-content">
+            <div class="era-block">
+              <h4>¿Qué ocurrió?</h4>
+              <p>La extinción más devastadora de la historia terrestre. El vulcanismo masivo en Siberia liberó CO₂, metano y azufre durante miles de años. Los océanos se acidificaron, el clima se calentó extremadamente y el oxígeno atmosphérico colapsó.</p>
+            </div>
+            <div class="era-block">
+              <h4>Datos clave</h4>
+              <ul>
+                <li>Trampas Siberianas: volcanes que cubrieron millones de km²</li>
+                <li>Los océanos perdieron casi todo su oxígeno</li>
+                <li>Casi todos los arrecifes desaparecieron por millones de años</li>
+                <li>La recuperación tardó 10 millones de años</li>
+              </ul>
+            </div>
+            <div class="era-block">
+              <h4>Extinción estimada</h4>
+              <span class="extinction-pct">~96%</span>
+              <p style="font-size:0.85rem; color:var(--fog)">la peor extinción de todos los tiempos</p>
+            </div>
+            <div class="era-block">
+              <h4>¿Qué sobrevivió?</h4>
+              <ul>
+                <li>Los primeros dinosaurios (ancestros)</li>
+                <li>Algunos reptiles terópodos resistentes</li>
+                <li>Grupos de horsetails y helechos</li>
+                <li>Insectos que resistieron en refugios</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        <!-- Carga de archivos  JS -->
+      <!-- 4. TRIÁSICO-JURÁSICO -->
+      <div class="era-card era-triasico" onclick="toggleEra(this)">
+        <div class="era-header">
+          <div class="era-number">04</div>
+          <div class="era-info">
+            <div class="era-name">Extinción Triásico-Jurásico</div>
+            <div class="era-meta">Hace ~201 millones de años</div>
+          </div>
+          <div class="era-badge" style="color:#e8a840">~80% de especies</div>
+          <div class="era-toggle">▼</div>
+        </div>
+        <div class="era-body">
+          <div class="era-content">
+            <div class="era-block">
+              <h4>¿Qué ocurrió?</h4>
+              <p>El fracturamiento del supercontinente Pangea desencadenó erupciones volcánicas masivas en el Atlántico central. El CO₂ liberado provocó calentamiento global, acidificación oceánica y lluvia ácida. Abrió el camino para el dominio de los dinosaurios.</p>
+            </div>
+            <div class="era-block">
+              <h4>Datos clave</h4>
+              <ul>
+                <li>Pangea comenzó a dividirse en esta época</li>
+                <li>Las erupciones duraron hasta 600,000 años</li>
+                <li>Eliminó a los grandes reptiles que competían con los dinosaurios</li>
+                <li>Relativamente rápida: menos de 10,000 años el pico</li>
+              </ul>
+            </div>
+            <div class="era-block">
+              <h4>Extinción estimada</h4>
+              <span class="extinction-pct">~80%</span>
+              <p style="font-size:0.85rem; color:var(--fog)">de las especies marinas y terrestres</p>
+            </div>
+            <div class="era-block">
+              <h4>¿Qué sobrevivió?</h4>
+              <ul>
+                <li>Dinosaurios (que luego dominaron el Jurásico)</li>
+                <li>Cocodrilos y tortugas primitivas</li>
+                <li>Primeros mamíferos pequeños</li>
+                <li>Peces teleósteos (antepasados de la mayoría de peces actuales)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/owl.carousel.min.js"></script>
-        <script type="text/javascript">
-            $(".owl-carousel").owlCarousel({
-                loop: true,
-                margin: 0,
-                nav: true,
-                autoWidth: false,
-                navText: [
-                    '<i class="fa fa-arrow-circle-left" title="Anterior"></i>',
-                    '<i class="fa  fa-arrow-circle-right" title="Siguiente"></i>'
-                ],
-                responsive: {
-                    0: {
-                        items: 1
-                    },
-                    500: {
-                        items: 2,
-                        margin: 20
-                    },
-                    800: {
-                        items: 3,
-                        margin: 20
-                    },
-                    1000: {
-                        items: 4,
-                        margin: 20
-                    }
-                }
-            });
-        </script>
-        <script src="js/wow.min.js"></script>
-        <script src="js/smooth-scroll.min.js"></script>
-        <script src="js/sitio.js"></script>
-    </body>
+      <!-- 5. CRETÁCICO-PALEÓGENO -->
+      <div class="era-card era-cretacico" onclick="toggleEra(this)">
+        <div class="era-header">
+          <div class="era-number">05</div>
+          <div class="era-info">
+            <div class="era-name">Extinción Cretácico-Paleógeno</div>
+            <div class="era-meta">Hace ~66 millones de años</div>
+          </div>
+          <div class="era-badge" style="color:#7ab8e0">~76% de especies</div>
+          <div class="era-toggle">▼</div>
+        </div>
+        <div class="era-body">
+          <div class="era-content">
+            <div class="era-block">
+              <h4>¿Qué ocurrió?</h4>
+              <p>Un asteroide de 10–15 km de diámetro impactó en Chicxulub, México. La explosión fue miles de veces más poderosa que todas las bombas nucleares del mundo. El polvo bloqueó el sol durante meses, colapsando la cadena alimenticia global.</p>
+            </div>
+            <div class="era-block">
+              <h4>Datos clave</h4>
+              <ul>
+                <li>El cráter de Chicxulub mide ~180 km de diámetro</li>
+                <li>Tsunamis de kilómetros de altura en los océanos</li>
+                <li>Incendios forestales globales</li>
+                <li>El "invierno de impacto" duró años</li>
+              </ul>
+            </div>
+            <div class="era-block">
+              <h4>Extinción estimada</h4>
+              <span class="extinction-pct">~76%</span>
+              <p style="font-size:0.85rem; color:var(--fog)">incluyendo todos los dinosaurios no aviares</p>
+            </div>
+            <div class="era-block">
+              <h4>¿Qué sobrevivió?</h4>
+              <ul>
+                <li>Las aves (descendientes de dinosaurios)</li>
+                <li>Mamíferos pequeños y cavadores</li>
+                <li>Cocodrilos, serpientes y tortugas</li>
+                <li>La mayoría de peces e insectos</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<!-- TIMELINE -->
+<div id="linea" class="timeline-strip">
+  <div class="timeline-inner">
+    <div class="tl-item">
+      <div class="tl-dot" style="border-color:#7abfb0; background:#7abfb0"></div>
+      <span class="tl-time">443 Ma</span>
+      <span class="tl-name">Ordovícico</span>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="border-color:#a8c878; background:#a8c878"></div>
+      <span class="tl-time">375–359 Ma</span>
+      <span class="tl-name">Devónico</span>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="border-color:#e05050; background:#e05050"></div>
+      <span class="tl-time">252 Ma</span>
+      <span class="tl-name">Permo-Triásico</span>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="border-color:#e8a840; background:#e8a840"></div>
+      <span class="tl-time">201 Ma</span>
+      <span class="tl-name">Triásico-Jurásico</span>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="border-color:#7ab8e0; background:#7ab8e0"></div>
+      <span class="tl-time">66 Ma</span>
+      <span class="tl-name">K-Pg</span>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="border-color:var(--ember); animation: breathe 2s infinite"></div>
+      <span class="tl-time">Presente</span>
+      <span class="tl-name" style="color:var(--ember)">¿Sexta?</span>
+    </div>
+  </div>
+</div>
+
+<!-- EVALUACION -->
+<div id="evaluacion" class="eval-section">
+  <div class="eval-inner">
+    <p class="section-label reveal" style="text-align:center; color:#8bb8c8">Formulario de visita</p>
+    <h2 class="section-title reveal" style="text-align:center; color:var(--bone)">Evaluación del <span style="color:var(--ice)">Museo</span></h2>
+    <p class="section-intro reveal" style="text-align:center; margin:0 auto 2.5rem; color:var(--fog)">
+      Califica la exposición del grupo que visitaste. Tu opinión ayuda a mejorar el aprendizaje.
+    </p>
+
+    <div id="formWrap">
+
+      <!-- GROUP SELECTOR -->
+      <div class="group-select-wrap reveal">
+        <span class="group-label">¿Qué grupo visitaste?</span>
+        <div class="group-grid" id="groupGrid">
+          <button class="group-btn" type="button" onclick="selectGroup(this, '9°2')">Grado 9-2</button>
+          <button class="group-btn" type="button" onclick="selectGroup(this, '9°3')">Grado 9-3</button>
+        </div>
+      </div>
+
+      <div class="group-select-wrap reveal">
+        <span class="group-label">¿Qué exposición vas a evaluar?</span>
+        <div class="exhibition-grid" id="exhibitionGrid">
+          <button class="group-btn exhibition-btn" type="button" onclick="selectExhibition(this, 'Extinción #1: Ordovícico - Silúrico')">#1 Ordovícico - Silúrico</button>
+          <button class="group-btn exhibition-btn" type="button" onclick="selectExhibition(this, 'Extinción #2: Devónico Tardío')">#2 Devónico Tardío</button>
+          <button class="group-btn exhibition-btn" type="button" onclick="selectExhibition(this, 'Extinción #3: Permo - Triásico')">#3 Permo - Triásico</button>
+          <button class="group-btn exhibition-btn" type="button" onclick="selectExhibition(this, 'Extinción #4: Triásico - Jurásico')">#4 Triásico - Jurásico</button>
+          <button class="group-btn exhibition-btn" type="button" onclick="selectExhibition(this, 'Extinción #5: Cretácico - Paleógeno')">#5 Cretácico - Paleógeno</button>
+        </div>
+      </div>
+
+      <!-- Q1 -->
+      <div class="eval-card reveal" data-n="1">
+        <p class="eval-question">1. ¿La exposición fue clara y fácil de entender?</p>
+        <div class="star-row" id="q1">
+          <button class="star-btn" data-value="1" onclick="selectStar('q1',1)">⭐ 1</button>
+          <button class="star-btn" data-value="2" onclick="selectStar('q1',2)">⭐⭐ 2</button>
+          <button class="star-btn" data-value="3" onclick="selectStar('q1',3)">⭐⭐⭐ 3</button>
+          <button class="star-btn" data-value="4" onclick="selectStar('q1',4)">⭐⭐⭐⭐ 4</button>
+          <button class="star-btn" data-value="5" onclick="selectStar('q1',5)">⭐⭐⭐⭐⭐ 5</button>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="eval-card reveal" data-n="2">
+        <p class="eval-question">2. ¿El grupo demostró conocimiento sobre selección natural, evolución y extinción?</p>
+        <div class="star-row" id="q2">
+          <button class="star-btn" data-value="1" onclick="selectStar('q2',1)">⭐ 1</button>
+          <button class="star-btn" data-value="2" onclick="selectStar('q2',2)">⭐⭐ 2</button>
+          <button class="star-btn" data-value="3" onclick="selectStar('q2',3)">⭐⭐⭐ 3</button>
+          <button class="star-btn" data-value="4" onclick="selectStar('q2',4)">⭐⭐⭐⭐ 4</button>
+          <button class="star-btn" data-value="5" onclick="selectStar('q2',5)">⭐⭐⭐⭐⭐ 5</button>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="eval-card reveal" data-n="3">
+        <p class="eval-question">3. ¿La creatividad y organización del espacio ayudaron a comprender el tema?</p>
+        <div class="star-row" id="q3">
+          <button class="star-btn" data-value="1" onclick="selectStar('q3',1)">⭐ 1</button>
+          <button class="star-btn" data-value="2" onclick="selectStar('q3',2)">⭐⭐ 2</button>
+          <button class="star-btn" data-value="3" onclick="selectStar('q3',3)">⭐⭐⭐ 3</button>
+          <button class="star-btn" data-value="4" onclick="selectStar('q3',4)">⭐⭐⭐⭐ 4</button>
+          <button class="star-btn" data-value="5" onclick="selectStar('q3',5)">⭐⭐⭐⭐⭐ 5</button>
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="eval-card reveal" data-n="4">
+        <p class="eval-question">4. ¿Los integrantes del grupo participaron y explicaron adecuadamente?</p>
+        <div class="star-row" id="q4">
+          <button class="star-btn" data-value="1" onclick="selectStar('q4',1)">⭐ 1</button>
+          <button class="star-btn" data-value="2" onclick="selectStar('q4',2)">⭐⭐ 2</button>
+          <button class="star-btn" data-value="3" onclick="selectStar('q4',3)">⭐⭐⭐ 3</button>
+          <button class="star-btn" data-value="4" onclick="selectStar('q4',4)">⭐⭐⭐⭐ 4</button>
+          <button class="star-btn" data-value="5" onclick="selectStar('q4',5)">⭐⭐⭐⭐⭐ 5</button>
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="eval-card reveal" data-n="5">
+        <p class="eval-question">5. Después de visitar el museo, ¿aprendiste algo nuevo o importante?</p>
+        <div class="star-row" id="q5">
+          <button class="star-btn" data-value="1" onclick="selectStar('q5',1)">⭐ 1</button>
+          <button class="star-btn" data-value="2" onclick="selectStar('q5',2)">⭐⭐ 2</button>
+          <button class="star-btn" data-value="3" onclick="selectStar('q5',3)">⭐⭐⭐ 3</button>
+          <button class="star-btn" data-value="4" onclick="selectStar('q5',4)">⭐⭐⭐⭐ 4</button>
+          <button class="star-btn" data-value="5" onclick="selectStar('q5',5)">⭐⭐⭐⭐⭐ 5</button>
+        </div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="eval-card reveal" data-n="6">
+        <p class="eval-question">6. ¿Qué fue lo que más te llamó la atención del museo?</p>
+        <textarea class="eval-textarea" id="q6" placeholder="Escribe aquí tu respuesta…"></textarea>
+      </div>
+
+      <button class="submit-btn" id="submitBtn" onclick="submitForm()">
+        Enviar Evaluación
+      </button>
+    </div>
+
+    <div class="success-msg" id="successMsg">
+      <div class="big-check">✅</div>
+      <h3>¡Evaluación enviada!</h3>
+      <p>Gracias por tu opinión. Tu retroalimentación es muy valiosa para los estudiantes de Grado 9°.</p>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <p>☠ &nbsp;<span>Museo de la Extinción</span>&nbsp; · &nbsp; Grados 9-2 y 9-3 &nbsp; · &nbsp; Aprendizaje Basado en Proyectos &nbsp; ☠</p>
+</footer>
+
+<script src="js/museo-extincion.js"></script>
+
+</body>
 </html>
