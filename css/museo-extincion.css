@@ -900,6 +900,71 @@
       margin-bottom: 2rem;
     }
 
+    .gallery-banner section {
+      padding: 3rem 0;
+    }
+
+    .gallery-banner .section-label,
+    .gallery-banner .section-title,
+    .gallery-banner .section-intro {
+      padding-inline: 1rem;
+    }
+
+    .gallery-slider {
+      width: 100vw;
+      margin-left: calc(50% - 50vw);
+      gap: 0;
+      align-items: stretch;
+      overflow: hidden;
+    }
+
+    .gallery-track {
+      width: 100%;
+      grid-auto-columns: 100%;
+      gap: 0;
+      padding-bottom: 0;
+      scrollbar-width: none;
+    }
+
+    .gallery-track::-webkit-scrollbar {
+      display: none;
+    }
+
+    .gallery-card {
+      width: 100%;
+      min-width: 100%;
+      border-left: 0;
+      border-right: 0;
+      border-radius: 0;
+    }
+
+    .gallery-card img {
+      width: 100%;
+      height: auto;
+      max-height: 72vh;
+      object-fit: contain;
+      background: #050607;
+    }
+
+    .gallery-card figcaption {
+      padding: 0.9rem 1rem 1.1rem;
+    }
+
+    .gallery-btn {
+      position: absolute;
+      top: 50%;
+      z-index: 5;
+      transform: translateY(-50%);
+      background: rgba(10,7,5,0.78);
+    }
+
+    .gallery-btn:hover {
+      transform: translateY(-50%) scale(1.03);
+    }
+
+    .gallery-btn.prev { left: 0.75rem; }
+    .gallery-btn.next { right: 0.75rem; }
+
     .era-header {
       display: grid;
       grid-template-columns: 48px minmax(0, 1fr) 24px;
