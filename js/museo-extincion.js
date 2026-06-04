@@ -84,6 +84,51 @@
     }
   }
 
+  function scrollGallery(direction) {
+    const track = document.getElementById('galleryTrack');
+    if (!track) return;
+    const card = track.querySelector('.gallery-card');
+    const gap = parseInt(getComputedStyle(track).gap, 10) || 16;
+    const step = (card ? card.offsetWidth : 280) + gap;
+    track.scrollBy({ left: direction * step, behavior: 'smooth' });
+  }
+
+  function autoplayGallery() {
+    const track = document.getElementById('galleryTrack');
+    if (!track) return;
+    const card = track.querySelector('.gallery-card');
+    if (!card) return;
+    const gap = parseInt(getComputedStyle(track).gap, 10) || 16;
+    const step = card.offsetWidth + gap;
+    const maxScroll = track.scrollWidth - track.clientWidth;
+
+    if (track.scrollLeft + step >= maxScroll - 2) {
+      track.scrollTo({ left: 0, behavior: 'smooth' });
+    } else {
+      track.scrollBy({ left: step, behavior: 'smooth' });
+    }
+  }
+
+  function setupGalleryAutoplay() {
+    const track = document.getElementById('galleryTrack');
+    if (!track) return;
+
+    let intervalId = setInterval(autoplayGallery, 4500);
+
+    const stopAutoplay = () => clearInterval(intervalId);
+    const startAutoplay = () => {
+      clearInterval(intervalId);
+      intervalId = setInterval(autoplayGallery, 4500);
+    };
+
+    track.addEventListener('mouseenter', stopAutoplay);
+    track.addEventListener('mouseleave', startAutoplay);
+    track.addEventListener('touchstart', stopAutoplay, { passive: true });
+    track.addEventListener('touchend', startAutoplay);
+  }
+
+  setupGalleryAutoplay();
+
   // ── Scroll reveal ──
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
