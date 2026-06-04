@@ -154,6 +154,10 @@
     background: linear-gradient(180deg, rgba(10,7,5,0.96) 0%, rgba(13,31,45,0.95) 100%);
   }
 
+  .gallery-banner-alt {
+    background: linear-gradient(180deg, rgba(13,31,45,0.95) 0%, rgba(10,7,5,0.96) 100%);
+  }
+
   .gallery-banner section {
     padding: 4rem 2rem;
     max-width: 1100px;

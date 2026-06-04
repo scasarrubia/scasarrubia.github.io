@@ -84,8 +84,8 @@
     }
   }
 
-  function scrollGallery(direction) {
-    const track = document.getElementById('galleryTrack');
+  function scrollGallery(direction, trackId = 'galleryTrack') {
+    const track = document.getElementById(trackId);
     if (!track) return;
     const card = track.querySelector('.gallery-card');
     const gap = parseInt(getComputedStyle(track).gap, 10) || 16;
@@ -93,8 +93,7 @@
     track.scrollBy({ left: direction * step, behavior: 'smooth' });
   }
 
-  function autoplayGallery() {
-    const track = document.getElementById('galleryTrack');
+  function autoplayGallery(track) {
     if (!track) return;
     const card = track.querySelector('.gallery-card');
     if (!card) return;
@@ -109,16 +108,15 @@
     }
   }
 
-  function setupGalleryAutoplay() {
-    const track = document.getElementById('galleryTrack');
+  function setupGalleryAutoplay(track) {
     if (!track) return;
 
-    let intervalId = setInterval(autoplayGallery, 4500);
+    let intervalId = setInterval(() => autoplayGallery(track), 4500);
 
     const stopAutoplay = () => clearInterval(intervalId);
     const startAutoplay = () => {
       clearInterval(intervalId);
-      intervalId = setInterval(autoplayGallery, 4500);
+      intervalId = setInterval(() => autoplayGallery(track), 4500);
     };
 
     track.addEventListener('mouseenter', stopAutoplay);
@@ -127,7 +125,7 @@
     track.addEventListener('touchend', startAutoplay);
   }
 
-  setupGalleryAutoplay();
+  document.querySelectorAll('.gallery-track').forEach(setupGalleryAutoplay);
 
   // ── Scroll reveal ──
   const observer = new IntersectionObserver((entries) => {

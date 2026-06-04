@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Museo de la Extinción — Big Five</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/museo-extincion.css">
+<link rel="stylesheet" href="css/museo-extincion.css?v=3">
 
 </head>
 <body>
@@ -49,7 +49,7 @@
       Imágenes del montaje y la exposición del grupo para ver cómo quedó el museo en acción.
     </p>
     <div class="gallery-slider" id="gallerySlider">
-      <button class="gallery-btn prev" type="button" onclick="scrollGallery(-1)" aria-label="Anterior imagen">‹</button>
+      <button class="gallery-btn prev" type="button" onclick="scrollGallery(-1, 'galleryTrack')" aria-label="Anterior imagen">‹</button>
       <div class="gallery-track" id="galleryTrack">
         <figure class="gallery-card">
           <img src="resource/imgb1.webp" alt="Estudiantes junto a una maqueta de la exposición" loading="lazy">
@@ -96,7 +96,54 @@
           <figcaption>Fin de la experiencia de exhibición</figcaption>
         </figure>
       </div>
-      <button class="gallery-btn next" type="button" onclick="scrollGallery(1)" aria-label="Siguiente imagen">›</button>
+      <button class="gallery-btn next" type="button" onclick="scrollGallery(1, 'galleryTrack')" aria-label="Siguiente imagen">›</button>
+    </div>
+  </section>
+</div>
+<div class="gallery-banner gallery-banner-alt reveal">
+  <section>
+    <p class="section-label">Galería de la visita</p>
+    <h2 class="section-title">Fotos del segundo grupo</h2>
+    <p class="section-intro">
+      Segundo recorrido fotográfico del montaje, la explicación y la experiencia del museo.
+    </p>
+    <div class="gallery-slider" id="gallerySlider2">
+      <button class="gallery-btn prev" type="button" onclick="scrollGallery(-1, 'galleryTrack2')" aria-label="Anterior imagen">‹</button>
+      <div class="gallery-track" id="galleryTrack2">
+        <figure class="gallery-card">
+          <img src="resource/grupo2-1.webp" alt="Segundo grupo presentando la exposición" loading="lazy">
+          <figcaption>Inicio de la exposición del segundo grupo</figcaption>
+        </figure>
+        <figure class="gallery-card">
+          <img src="resource/grupo2-2.webp" alt="Materiales visuales del segundo grupo" loading="lazy">
+          <figcaption>Materiales y explicación visual</figcaption>
+        </figure>
+        <figure class="gallery-card">
+          <img src="resource/grupo2-3.webp" alt="Estudiantes del segundo grupo explicando el museo" loading="lazy">
+          <figcaption>Presentación del tema al público</figcaption>
+        </figure>
+        <figure class="gallery-card">
+          <img src="resource/grupo2-4.webp" alt="Visitantes observando la muestra del segundo grupo" loading="lazy">
+          <figcaption>Visitantes durante el recorrido</figcaption>
+        </figure>
+        <figure class="gallery-card">
+          <img src="resource/grupo2-5.webp" alt="Detalle del montaje del segundo grupo" loading="lazy">
+          <figcaption>Detalles del montaje del museo</figcaption>
+        </figure>
+        <figure class="gallery-card">
+          <img src="resource/grupo2-6.webp" alt="Segundo grupo junto a su exposición" loading="lazy">
+          <figcaption>Trabajo colaborativo del segundo grupo</figcaption>
+        </figure>
+        <figure class="gallery-card">
+          <img src="resource/grupo2-7.webp" alt="Explicación del segundo grupo con visitantes" loading="lazy">
+          <figcaption>Explicación e interacción con visitantes</figcaption>
+        </figure>
+        <figure class="gallery-card">
+          <img src="resource/grupo2-8.webp" alt="Cierre de la experiencia del segundo grupo" loading="lazy">
+          <figcaption>Cierre de la experiencia de exhibición</figcaption>
+        </figure>
+      </div>
+      <button class="gallery-btn next" type="button" onclick="scrollGallery(1, 'galleryTrack2')" aria-label="Siguiente imagen">›</button>
     </div>
   </section>
 </div>
@@ -487,7 +534,7 @@
   <p>☠ &nbsp;<span>Museo de la Extinción</span>&nbsp; · &nbsp; Grados 9-2 y 9-3 &nbsp; · &nbsp; Aprendizaje Basado en Proyectos &nbsp; ☠</p>
 </footer>
 
-<script src="js/museo-extincion.js"></script>
+<script src="js/museo-extincion.js?v=3"></script>
 
 </body>
 </html>
