@@ -1,9 +1,10 @@
 import { computed, onMounted, ref } from 'vue';
 import { localNewsItems } from '../constants/newsItems';
+import { compareNewsNewestFirst } from '../utils/newsOrder';
 
 const newsUrl = import.meta.env.VITE_NEWS_URL;
 const defaultNewsImage = '/images/img_hero_1.webp';
-const sharedNewsItems = ref(newsUrl ? [] : localNewsItems.map(normalizeNewsItem));
+const sharedNewsItems = ref(newsUrl ? [] : localNewsItems.map(normalizeNewsItem).sort(compareNewsNewestFirst));
 const sharedError = ref('');
 const sharedIsLoading = ref(Boolean(newsUrl));
 let hasLoadedNews = false;
@@ -125,9 +126,9 @@ export function useNews() {
       const normalizedNews = loadedNews
         .map(normalizeNewsItem)
         .filter((item) => item.title && item.active)
-        .sort((first, second) => first.order - second.order);
+        .sort(compareNewsNewestFirst);
 
-      sharedNewsItems.value = normalizedNews.length || newsUrl ? normalizedNews : localNewsItems.map(normalizeNewsItem);
+      sharedNewsItems.value = normalizedNews.length || newsUrl ? normalizedNews : localNewsItems.map(normalizeNewsItem).sort(compareNewsNewestFirst);
       hasLoadedNews = true;
     })();
 
@@ -135,7 +136,7 @@ export function useNews() {
       await pendingNewsRequest;
     } catch (loadError) {
       sharedError.value = loadError.message;
-      sharedNewsItems.value = newsUrl ? [] : localNewsItems.map(normalizeNewsItem);
+      sharedNewsItems.value = newsUrl ? [] : localNewsItems.map(normalizeNewsItem).sort(compareNewsNewestFirst);
     } finally {
       sharedIsLoading.value = false;
       pendingNewsRequest = null;
