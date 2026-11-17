@@ -30,7 +30,6 @@ const interestLinks = [
     <div class="site-footer__container">
       <div class="site-footer__grid">
         <section class="footer-brand" aria-labelledby="footer-brand-title">
-          <img class="footer-brand__crest" src="/images/escudo.webp" alt="Escudo institucional" width="64" height="64" loading="lazy" />
           <h2 id="footer-brand-title">
             Institución Educativa Padre Roberto Arroyave Vélez
           </h2>
@@ -239,7 +238,6 @@ const interestLinks = [
 .site-footer--updated h2, .site-footer--updated h3 { font-family: Georgia, 'Times New Roman', serif; }
 .site-footer--updated h2 { font-size: 1.3rem; line-height: 1.4; }
 .site-footer--updated h3 { font-size: 1.15rem; margin-bottom: 1.1rem; }
-.footer-brand__crest { display: block; object-fit: contain; width: 4rem; height: 4rem; margin-bottom: 1rem; }
 .site-footer--updated p, .site-footer--updated ul, .site-footer--updated .footer-contact { font-size: .95rem; line-height: 1.75; color: #e1eee5; }
 .site-footer--updated .footer-brand ul { padding-top: .75rem; border-top: 1px solid #ffffff24; }
 .site-footer--updated .footer-brand li { margin: .25rem 0; font-size: .85rem; }
