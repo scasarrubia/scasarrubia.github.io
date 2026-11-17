@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    margin: 0;
+  }
+}
+
+@layer utilities {
+  .reveal {
+    opacity: 0;
+    transform: translate3d(0, 2rem, 0);
+    transition:
+      opacity 780ms ease,
+      transform 780ms cubic-bezier(.22, 1, .36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+
+  .reveal--left {
+    transform: translate3d(-3rem, 0, 0);
+  }
+
+  .reveal--right {
+    transform: translate3d(3rem, 0, 0);
+  }
+
+  .reveal--down {
+    transform: translate3d(0, -2rem, 0);
+  }
+
+  .reveal--zoom {
+    transform: scale(.9);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  .icon-spin-hover {
+    transform-origin: center;
+    transition: transform 620ms cubic-bezier(.22, 1, .36, 1);
+  }
+
+  .group:hover .icon-spin-hover,
+  .icon-spin-hover:hover {
+    transform: rotate(360deg) scale(1.08);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal,
+    .icon-spin-hover {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+}

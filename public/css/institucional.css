@@ -1,0 +1,768 @@
+body {
+  background: #f7f8f4;
+  color: #1f2f2b;
+}
+
+.bienvenidos {
+  background: #123c35;
+  overflow: hidden;
+  position: relative;
+}
+
+.bienvenidos::after {
+  background:
+    linear-gradient(rgba(10, 45, 40, .76), rgba(10, 45, 40, .58)),
+    radial-gradient(circle at 20% 20%, rgba(229, 181, 75, .25), transparent 18rem),
+    radial-gradient(circle at 82% 60%, rgba(84, 158, 192, .22), transparent 20rem);
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.bienvenidos > * {
+  position: relative;
+  z-index: 1;
+}
+
+.encabezado,
+.piedepagina {
+  background: #123c35;
+}
+
+.piedepagina {
+  text-align: left;
+}
+
+.encabezado.fondo-menu {
+  background: #0d2f2a;
+}
+
+.logo-institucional {
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+  text-decoration: none;
+}
+
+.logo-institucional:hover,
+.logo-institucional:focus {
+  color: #fff;
+  text-decoration: none;
+}
+
+.logo-institucional__sigla {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.logo-institucional__nombre {
+  font-size: .72rem;
+  max-width: 10rem;
+  text-transform: uppercase;
+}
+
+.hero-eyebrow,
+.section-kicker {
+  color: #e5b54b;
+  font-weight: 700;
+  margin-bottom: .6rem;
+  text-transform: uppercase;
+}
+
+.texto-encabezado p {
+  max-width: 46rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-motion {
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+}
+
+.hero-motion__item {
+  animation: float-soft 7s ease-in-out infinite;
+  border: 1px solid rgba(255, 255, 255, .45);
+  border-radius: 999px;
+  color: #fff;
+  font-weight: 700;
+  padding: .55rem 1rem;
+  position: absolute;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, .25);
+}
+
+.hero-motion__item--one {
+  left: 8%;
+  top: 24%;
+}
+
+.hero-motion__item--two {
+  animation-delay: -1.5s;
+  right: 13%;
+  top: 30%;
+}
+
+.hero-motion__item--three {
+  animation-delay: -3s;
+  bottom: 21%;
+  left: 15%;
+}
+
+.hero-motion__item--four {
+  animation-delay: -4.5s;
+  bottom: 26%;
+  right: 10%;
+}
+
+.institucion {
+  background: #f7f8f4;
+  color: #1f2f2b;
+}
+
+.home-shell {
+  display: grid;
+  gap: 1.25rem;
+  margin: 0 auto;
+  max-width: 1140px;
+  padding: 0 15px;
+}
+
+.home-main {
+  min-width: 0;
+}
+
+.institucion img {
+  border-radius: 6px;
+  display: block;
+  margin: 0 auto;
+  max-height: 18rem;
+  object-fit: cover;
+  width: 100%;
+}
+
+.propuesta {
+  background: #ffffff;
+}
+
+.calendario-escolar {
+  background: #ffffff;
+  color: #1f2f2b;
+}
+
+.home-sidebar .calendario-escolar {
+  border: 1px solid #dde6dc;
+  border-radius: 8px;
+  box-shadow: 0 .8rem 1.8rem rgba(31, 47, 43, .1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: 100%;
+}
+
+.calendario-escolar__header {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.home-sidebar .calendario-escolar__header {
+  gap: .75rem;
+}
+
+.home-sidebar .calendario-escolar__header h2 {
+  font-size: 1.15rem;
+  line-height: 1.25;
+}
+
+.home-sidebar .calendario-escolar__header p:not(.section-kicker) {
+  font-size: .9rem;
+}
+
+.calendario-escolar__header p {
+  margin-bottom: 0;
+}
+
+.calendario-escolar__source {
+  align-items: center;
+  background: #e7f0e8;
+  border-left: 4px solid #123c35;
+  border-radius: 6px;
+  display: flex;
+  gap: .65rem;
+  margin-bottom: 1rem;
+  padding: .85rem 1rem;
+}
+
+.home-sidebar .calendario-escolar__source {
+  align-items: flex-start;
+  font-size: .82rem;
+  line-height: 1.35;
+  padding: .65rem .75rem;
+}
+
+.calendario-escolar__source--pending {
+  background: #fff7e4;
+  border-left-color: #e5b54b;
+}
+
+.calendario-escolar__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem;
+  margin-bottom: 1.25rem;
+}
+
+.home-sidebar .calendario-escolar__filters {
+  gap: .35rem;
+  margin-bottom: 1rem;
+}
+
+.calendario-escolar__filters button {
+  background: #f7f8f4;
+  border: 1px solid #dde6dc;
+  border-radius: 999px;
+  color: #1f2f2b;
+  cursor: pointer;
+  font-weight: 700;
+  padding: .45rem .9rem;
+  transition: background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease;
+}
+
+.home-sidebar .calendario-escolar__filters button {
+  font-size: .78rem;
+  padding: .32rem .62rem;
+}
+
+.calendario-escolar__filters button:hover,
+.calendario-escolar__filters button:focus,
+.calendario-escolar__filter--active {
+  background: #123c35 !important;
+  border-color: #123c35 !important;
+  color: #fff !important;
+  outline: 0;
+  transform: translateY(-.1rem);
+}
+
+.calendario-escolar__error {
+  background: #fff0f0;
+  border-left: 4px solid #b84a4a;
+  border-radius: 6px;
+  color: #7c2626;
+  padding: .85rem 1rem;
+}
+
+.calendario-escolar__list {
+  align-content: start;
+  align-items: start;
+  display: grid;
+  gap: 1rem;
+  grid-auto-rows: max-content;
+}
+
+.home-sidebar .calendario-escolar__list {
+  align-content: start;
+  align-items: start;
+  flex: 1 1 auto;
+  gap: .42rem;
+  grid-auto-rows: max-content;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding-right: .2rem;
+}
+
+.calendario-evento {
+  background: #f7f8f4;
+  border: 1px solid #dde6dc;
+  border-radius: 8px;
+  display: grid;
+  gap: 1rem;
+  overflow: hidden;
+  padding: 1rem;
+  transition: box-shadow .25s ease, transform .25s ease;
+}
+
+.home-sidebar .calendario-evento {
+  align-self: start;
+  gap: .45rem;
+  padding: .42rem;
+}
+
+.calendario-evento:hover {
+  box-shadow: 0 .9rem 1.75rem rgba(31, 47, 43, .12);
+  transform: translateY(-.2rem);
+}
+
+.calendario-evento time {
+  align-items: center;
+  background: #123c35;
+  border-radius: 8px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 5.5rem;
+  padding: .75rem;
+  text-align: center;
+}
+
+.home-sidebar .calendario-evento time {
+  border-radius: 6px;
+  min-height: 3rem;
+  padding: .28rem;
+}
+
+.calendario-evento time span {
+  color: #e5b54b;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.home-sidebar .calendario-evento time span {
+  font-size: 1.05rem;
+}
+
+.calendario-evento time small {
+  font-weight: 700;
+  margin-top: .25rem;
+  text-transform: capitalize;
+}
+
+.home-sidebar .calendario-evento time small {
+  font-size: .58rem;
+  margin-top: .1rem;
+}
+
+.calendario-evento__tag {
+  background: #e5b54b;
+  border-radius: 999px;
+  color: #123c35;
+  display: inline-block;
+  font-size: .78rem;
+  font-weight: 700;
+  margin-bottom: .5rem;
+  padding: .25rem .65rem;
+}
+
+.home-sidebar .calendario-evento__tag {
+  font-size: .56rem;
+  margin-bottom: .18rem;
+  padding: .1rem .35rem;
+}
+
+.calendario-evento h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.home-sidebar .calendario-evento h3 {
+  font-size: .76rem;
+  line-height: 1.1;
+  margin-bottom: .12rem;
+}
+
+.calendario-evento ul {
+  display: grid;
+  gap: .3rem;
+  list-style: none;
+  margin: .75rem 0 0;
+  padding: 0;
+}
+
+.home-sidebar .calendario-evento ul {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: .64rem;
+  gap: .08rem .45rem;
+  margin-top: .22rem;
+}
+
+.home-sidebar .calendario-evento__location {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.calendario-evento li {
+  color: #42554f;
+}
+
+.explorador {
+  background: #f7f8f4;
+  color: #1f2f2b;
+}
+
+.explorador__intro {
+  max-width: 46rem;
+  margin: 0 auto 2rem;
+}
+
+.explorador__panel {
+  background: #fff;
+  border: 1px solid #dde6dc;
+  border-radius: 8px;
+  box-shadow: 0 1rem 2.5rem rgba(31, 47, 43, .1);
+  display: grid;
+  overflow: hidden;
+}
+
+.explorador__levels {
+  background: #123c35;
+  display: grid;
+}
+
+.explorador__level {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, .14);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  font-weight: 700;
+  gap: .75rem;
+  min-height: 4.4rem;
+  padding: 1rem;
+  text-align: left;
+  transition: background .25s ease, color .25s ease, transform .25s ease;
+}
+
+.explorador__level:hover,
+.explorador__level:focus,
+.explorador__level--active {
+  background: #e5b54b;
+  color: #123c35;
+  outline: 0;
+  transform: translateX(.25rem);
+}
+
+.explorador__content {
+  padding: 1.25rem;
+}
+
+.explorador__summary {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.explorador__summary h3 {
+  font-weight: 700;
+  margin-bottom: .35rem;
+}
+
+.explorador__summary p {
+  margin-bottom: 0;
+}
+
+.explorador__areas {
+  display: grid;
+  gap: 1rem;
+}
+
+.explorador__area {
+  background: #f7f8f4;
+  border-left: 4px solid #e5b54b;
+  border-radius: 6px;
+  padding: 1rem;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.explorador__area:hover {
+  box-shadow: 0 .7rem 1.5rem rgba(31, 47, 43, .12);
+  transform: translateY(-.25rem);
+}
+
+.explorador__area h4 {
+  font-weight: 700;
+}
+
+.propuesta h2 span {
+  color: #123c35;
+}
+
+.propuesta-grid {
+  margin-top: 2rem;
+}
+
+.propuesta-grid article {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  transition: transform .25s ease;
+}
+
+.propuesta-grid article:hover {
+  transform: translateY(-.35rem);
+}
+
+.propuesta-grid h4 {
+  font-weight: 700;
+}
+
+.proyectos {
+  background:
+    linear-gradient(rgba(18, 60, 53, .9), rgba(18, 60, 53, .86)),
+    url("/images/img_hero.webp") no-repeat center center;
+  background-size: cover;
+  color: #fff;
+}
+
+.indicadores {
+  background: #123c35;
+  color: #fff;
+  padding: 2rem 0;
+  text-align: center;
+}
+
+.indicadores article {
+  margin: .75rem 0;
+}
+
+.indicadores strong {
+  color: #e5b54b;
+  display: block;
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.indicadores span {
+  display: block;
+  font-weight: 700;
+  margin-top: .4rem;
+}
+
+.proyectos article {
+  align-items: center;
+  display: flex;
+  margin: 1rem 0;
+}
+
+.proyectos img {
+  flex: 0 0 60px;
+  margin-right: 1rem;
+}
+
+.proyectos h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.proyectos h3 a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.noticias {
+  background: #f7f8f4;
+}
+
+.noticias a {
+  text-decoration: none;
+}
+
+.noticias h4 {
+  color: #1f2f2b;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.noticias img {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.ir-arriba {
+  color: #d99b28;
+}
+
+.footer-grid {
+  display: grid;
+  gap: 1.75rem;
+}
+
+.footer-brand h2,
+.piedepagina h3 {
+  color: #fff;
+  font-weight: 700;
+}
+
+.footer-brand h2 {
+  font-size: 1.25rem;
+  line-height: 1.25;
+  margin-bottom: .75rem;
+}
+
+.piedepagina h3 {
+  font-size: 1rem;
+  margin-bottom: .8rem;
+}
+
+.footer-brand p,
+.footer-meta,
+.footer-contact,
+.footer-links,
+.footer-bottom p {
+  color: rgba(255, 255, 255, .82);
+}
+
+.footer-meta,
+.footer-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-meta li,
+.footer-links li {
+  margin-bottom: .45rem;
+}
+
+.footer-contact {
+  display: grid;
+  font-style: normal;
+  gap: .45rem;
+}
+
+.footer-contact a,
+.footer-links a {
+  color: rgba(255, 255, 255, .88);
+  text-decoration: none;
+  transition: color .2s ease, padding-left .2s ease;
+}
+
+.footer-contact a:hover,
+.footer-contact a:focus,
+.footer-links a:hover,
+.footer-links a:focus {
+  color: #e5b54b;
+  padding-left: .15rem;
+  text-decoration: none;
+}
+
+.footer-bottom {
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, .16);
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+}
+
+.footer-bottom p {
+  margin: 0;
+}
+
+.footer-social {
+  align-items: center;
+  background: rgba(255, 255, 255, .1);
+  border-radius: 50%;
+  color: #fff;
+  display: inline-flex;
+  flex: 0 0 2.5rem;
+  height: 2.5rem;
+  justify-content: center;
+  text-decoration: none;
+  transition: background .2s ease, color .2s ease;
+  width: 2.5rem;
+}
+
+.footer-social:hover,
+.footer-social:focus {
+  background: #e5b54b;
+  color: #123c35;
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+  .calendario-escolar__header {
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .calendario-evento {
+    grid-template-columns: 7rem 1fr;
+  }
+
+  .explorador__panel {
+    grid-template-columns: minmax(15rem, 18rem) 1fr;
+  }
+
+  .explorador__content {
+    padding: 2rem;
+  }
+
+  .explorador__areas {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .proyectos article {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .proyectos img {
+    flex: 0 0 150px;
+    margin-bottom: 1rem;
+    margin-right: 0;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1.5fr 1.1fr .9fr 1.2fr;
+  }
+}
+
+@media (min-width: 992px) {
+  .home-shell {
+    align-items: start;
+    grid-template-columns: minmax(0, 1fr) 20rem;
+  }
+
+  .home-sidebar {
+    display: flex;
+    height: auto;
+    min-height: 0;
+  }
+
+  .home-sidebar .calendario-escolar {
+    max-height: min(44rem, calc(100vh - 7rem));
+  }
+
+  .home-sidebar .calendario-evento {
+    grid-template-columns: 3rem minmax(0, 1fr);
+  }
+}
+
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -1rem, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-motion__item,
+  .explorador__level,
+  .explorador__area,
+  .calendario-evento,
+  .calendario-escolar__filters button,
+  .propuesta-grid article {
+    animation: none;
+    transition: none;
+  }
+}
