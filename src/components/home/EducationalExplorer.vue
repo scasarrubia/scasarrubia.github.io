@@ -18,14 +18,14 @@ const activeLevel = computed(() => learningLevels.find((level) => level.id === a
   <section class="learning-explorer" id="niveles">
     <div class="learning-explorer__container">
       <div class="learning-explorer__header">
-        <p v-reveal="'down'" class="section-kicker">Ruta de aprendizaje</p>
-        <h2 v-reveal="{ direction: 'up', delay: 120 }">Contenidos por niveles y áreas</h2>
-        <p v-reveal="{ direction: 'up', delay: 220 }">
+        <p class="section-kicker">Ruta de aprendizaje</p>
+        <h2>Contenidos por niveles y áreas</h2>
+        <p>
           Un espacio para organizar recursos, proyectos y experiencias pedagógicas de acuerdo con la trayectoria escolar.
         </p>
       </div>
 
-      <div v-reveal="{ direction: 'up', delay: 260 }" class="learning-explorer__panel">
+      <div class="learning-explorer__panel">
         <div class="learning-explorer__tabs" role="tablist" aria-label="Niveles educativos">
           <button
             v-for="level in learningLevels"
@@ -65,7 +65,7 @@ const activeLevel = computed(() => learningLevels.find((level) => level.id === a
             <article
               v-for="area in activeLevel.areas"
               :key="area.name"
-              v-reveal="{ direction: 'right', delay: 120 }"
+
               class="learning-explorer__area">
               <h4>{{ area.name }}</h4>
               <p>{{ area.detail }}</p>
@@ -279,5 +279,30 @@ const activeLevel = computed(() => learningLevels.find((level) => level.id === a
   .learning-explorer__areas {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+}
+/* Home readability and responsive layout. */
+.learning-explorer { padding: 2.75rem 0 2rem; font-family: 'Open Sans', Arial, sans-serif; font-size: 1rem; line-height: 1.65; }
+.learning-explorer__container { max-width: 1200px; padding: 0 1.5rem; }
+.learning-explorer__header { max-width: 58rem; margin-bottom: 1.75rem; }
+.section-kicker { color: #8b6418; font-size: .75rem; letter-spacing: .08em; }
+.learning-explorer__header h2 { font-family: Georgia, 'Times New Roman', serif; font-size: clamp(1.65rem, 3vw, 2.4rem); line-height: 1.2; color: #123c35; }
+.learning-explorer__panel { border-radius: 14px; box-shadow: 0 8px 24px #123c350a; }
+.learning-explorer__tab { font-size: 1rem; }
+.learning-explorer__area h4 { font-family: Georgia, 'Times New Roman', serif; font-size: 1.05rem; line-height: 1.35; }
+.learning-explorer__area { font-size: .95rem; padding: 1rem; }
+.learning-explorer .icon-spin-hover { transition: none; transform: none; }
+@media (min-width: 768px) {
+  .learning-explorer__panel { grid-template-columns: 15rem minmax(0,1fr); }
+  .learning-explorer__content { padding: 1.5rem; }
+}
+@media (min-width: 768px) and (max-width: 1050px) {
+  .learning-explorer__areas { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .learning-explorer__container { padding: 0 1rem; }
+  .learning-explorer__tabs { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .learning-explorer__tab { padding: .75rem; font-size: .85rem; gap: .4rem; }
+  .learning-explorer__tab svg { width: 1.35rem; flex-shrink: 0; }
+  .learning-explorer__summary { align-items: flex-start; }
 }
 </style>

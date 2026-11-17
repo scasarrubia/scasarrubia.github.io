@@ -27,7 +27,7 @@ const heroContent = computed(() => ({
 
     <RouterView />
 
-    <AppFooter />
+    <AppFooter :home-preview="isHomePage" />
 
     <SiteAlerts />
   </div>
