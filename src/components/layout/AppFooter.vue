@@ -1,8 +1,6 @@
 <script setup>
 import { Mail, MapPin, Phone } from '@lucide/vue';
 
-defineProps({ homePreview: { type: Boolean, default: false } });
-
 const interestLinks = [
   {
     label: 'Ministerio de Educación Nacional',
@@ -28,11 +26,11 @@ const interestLinks = [
 </script>
 
 <template>
-  <footer class="site-footer" :class="{ 'site-footer--home': homePreview }" role="contentinfo">
+  <footer class="site-footer site-footer--updated" role="contentinfo">
     <div class="site-footer__container">
       <div class="site-footer__grid">
         <section class="footer-brand" aria-labelledby="footer-brand-title">
-          <img v-if="homePreview" class="footer-brand__crest" src="/images/escudo.webp" alt="Escudo institucional" width="64" height="64" loading="lazy" />
+          <img class="footer-brand__crest" src="/images/escudo.webp" alt="Escudo institucional" width="64" height="64" loading="lazy" />
           <h2 id="footer-brand-title">
             Institución Educativa Padre Roberto Arroyave Vélez
           </h2>
@@ -80,7 +78,7 @@ const interestLinks = [
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Facebook de la Institución Educativa Padre Roberto Arroyave Vélez">
-          <span v-if="homePreview">Síguenos en Facebook</span>
+          <span>Síguenos en Facebook</span>
           <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
             <path
               fill="currentColor"
@@ -235,38 +233,38 @@ const interestLinks = [
     grid-template-columns: 1.5fr 1.1fr 1.2fr;
   }
 }
-/* Refined footer enabled only on Home. */
-.site-footer--home { background: #064b3c; border-top: 4px solid #d9bd52; font-family: 'Open Sans', Arial, sans-serif; }
-.site-footer--home, .site-footer--home * { box-sizing: border-box; }
-.site-footer--home h2, .site-footer--home h3 { font-family: Georgia, 'Times New Roman', serif; }
-.site-footer--home h2 { font-size: 1.3rem; line-height: 1.4; }
-.site-footer--home h3 { font-size: 1.15rem; margin-bottom: 1.1rem; }
+/* Shared footer design for every page. */
+.site-footer--updated { background: #064b3c; border-top: 4px solid #d9bd52; font-family: 'Open Sans', Arial, sans-serif; }
+.site-footer--updated, .site-footer--updated * { box-sizing: border-box; }
+.site-footer--updated h2, .site-footer--updated h3 { font-family: Georgia, 'Times New Roman', serif; }
+.site-footer--updated h2 { font-size: 1.3rem; line-height: 1.4; }
+.site-footer--updated h3 { font-size: 1.15rem; margin-bottom: 1.1rem; }
 .footer-brand__crest { display: block; object-fit: contain; width: 4rem; height: 4rem; margin-bottom: 1rem; }
-.site-footer--home p, .site-footer--home ul, .site-footer--home .footer-contact { font-size: .95rem; line-height: 1.75; color: #e1eee5; }
-.site-footer--home .footer-brand ul { padding-top: .75rem; border-top: 1px solid #ffffff24; }
-.site-footer--home .footer-brand li { margin: .25rem 0; font-size: .85rem; }
-.site-footer--home .footer-contact { gap: .85rem; }
-.site-footer--home .footer-contact a, .site-footer--home .footer-links a { color: #e1eee5; overflow-wrap: anywhere; }
-.site-footer--home .footer-contact a { min-height: 2.5rem; align-items: center; }
-.site-footer--home .footer-links a { padding: .4rem 0; }
-.site-footer--home .footer-links a:hover, .site-footer--home .footer-contact a:hover { color: #f5d66e; text-decoration: underline; }
-.site-footer--home a:focus-visible { outline: 2px solid #f5d66e; outline-offset: 4px; }
-.site-footer--home .site-footer__bottom { margin-top: 2rem; padding-top: 1.25rem; flex-wrap: wrap; }
-.site-footer--home .site-footer__bottom p { font-size: .8rem; flex: 1 1 28rem; }
-.site-footer--home .site-footer__social { gap: .6rem; background: #ffffff12; border: 1px solid #ffffff40; color: white; border-radius: 8px; width: auto; height: auto; min-height: 44px; padding: .65rem .85rem; font-size: .8rem; max-width: 100%; }
-.site-footer--home .site-footer__social svg { width: 1.2rem; height: 1.2rem; flex-shrink: 0; }
-.site-footer--home .site-footer__social:hover { background: #ffffff25; }
+.site-footer--updated p, .site-footer--updated ul, .site-footer--updated .footer-contact { font-size: .95rem; line-height: 1.75; color: #e1eee5; }
+.site-footer--updated .footer-brand ul { padding-top: .75rem; border-top: 1px solid #ffffff24; }
+.site-footer--updated .footer-brand li { margin: .25rem 0; font-size: .85rem; }
+.site-footer--updated .footer-contact { gap: .85rem; }
+.site-footer--updated .footer-contact a, .site-footer--updated .footer-links a { color: #e1eee5; overflow-wrap: anywhere; }
+.site-footer--updated .footer-contact a { min-height: 2.5rem; align-items: center; }
+.site-footer--updated .footer-links a { padding: .4rem 0; }
+.site-footer--updated .footer-links a:hover, .site-footer--updated .footer-contact a:hover { color: #f5d66e; text-decoration: underline; }
+.site-footer--updated a:focus-visible { outline: 2px solid #f5d66e; outline-offset: 4px; }
+.site-footer--updated .site-footer__bottom { margin-top: 2rem; padding-top: 1.25rem; flex-wrap: wrap; }
+.site-footer--updated .site-footer__bottom p { font-size: .8rem; flex: 1 1 28rem; }
+.site-footer--updated .site-footer__social { gap: .6rem; background: #ffffff12; border: 1px solid #ffffff40; color: white; border-radius: 8px; width: auto; height: auto; min-height: 44px; padding: .65rem .85rem; font-size: .8rem; max-width: 100%; }
+.site-footer--updated .site-footer__social svg { width: 1.2rem; height: 1.2rem; flex-shrink: 0; }
+.site-footer--updated .site-footer__social:hover { background: #ffffff25; }
 @media (min-width: 768px) and (max-width: 1023px) {
-  .site-footer--home .site-footer__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .site-footer--home .footer-brand { grid-column: 1 / -1; }
+  .site-footer--updated .site-footer__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .site-footer--updated .footer-brand { grid-column: 1 / -1; }
 }
 @media (min-width: 1024px) {
-  .site-footer--home .site-footer__grid { grid-template-columns: 1.25fr 1fr 1fr; gap: 2.5rem; }
-  .site-footer--home .site-footer__grid > section + section { border-left: 1px solid #ffffff24; padding-left: 1.75rem; }
+  .site-footer--updated .site-footer__grid { grid-template-columns: 1.25fr 1fr 1fr; gap: 2.5rem; }
+  .site-footer--updated .site-footer__grid > section + section { border-left: 1px solid #ffffff24; padding-left: 1.75rem; }
 }
 @media (max-width: 767px) {
-  .site-footer--home { padding-top: 2rem; }
-  .site-footer--home .site-footer__container { padding: 0 1rem; }
-  .site-footer--home .site-footer__grid > section + section { padding-top: 1.5rem; border-top: 1px solid #ffffff24; }
+  .site-footer--updated { padding-top: 2rem; }
+  .site-footer--updated .site-footer__container { padding: 0 1rem; }
+  .site-footer--updated .site-footer__grid > section + section { padding-top: 1.5rem; border-top: 1px solid #ffffff24; }
 }
 </style>
