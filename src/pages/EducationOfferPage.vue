@@ -1,12 +1,26 @@
 <script setup>
 import { computed, onUnmounted, ref, watch } from 'vue';
-import { ChevronLeft, ChevronRight, Download, Eye, FileCheck2 } from '@lucide/vue';
+import { ChevronLeft, ChevronRight, Download, Eye, FileCheck2, Keyboard } from '@lucide/vue';
 import { useInstitutionalDocuments } from '../composables/useInstitutionalDocuments';
 
 const {
+  documents,
   featuredDocument,
   secondaryDocuments
 } = useInstitutionalDocuments();
+
+// Accent color per document type, matched by its short title.
+const documentAccents = {
+  PEI: '#07513e',
+  Manual: '#3f9b6a',
+  SIEE: '#2f7fa6'
+};
+
+function documentAccent(documentItem) {
+  return documentAccents[documentItem?.shortTitle] ?? '#8a5aa8';
+}
+
+const manualDocument = computed(() => documents.value.find((documentItem) => documentItem.shortTitle === 'Manual'));
 const manualPageCount = 129;
 const currentManualPage = ref(1);
 const flipDirection = ref('next');
@@ -93,6 +107,27 @@ function goToNextManualPages() {
   turnManualPage(Math.min(manualPageCount, currentManualPage.value + 2), 'next');
 }
 
+// Spreads always start on an odd page (1-2, 3-4, ...).
+function jumpToManualPage(pageNumber) {
+  const page = Math.min(manualPageCount, Math.max(1, Number(pageNumber) || 1));
+  const spreadStart = page % 2 === 1 ? page : page - 1;
+  if (spreadStart === currentManualPage.value) return;
+
+  turnManualPage(spreadStart, spreadStart > currentManualPage.value ? 'next' : 'previous');
+}
+
+function handleManualKeydown(event) {
+  if (event.key === 'ArrowRight') {
+    event.preventDefault();
+    goToNextManualPages();
+  } else if (event.key === 'ArrowLeft') {
+    event.preventDefault();
+    goToPreviousManualPages();
+  }
+}
+
+const manualProgress = computed(() => `${(lastVisibleManualPage.value / manualPageCount) * 100}%`);
+
 onUnmounted(() => {
   window.clearTimeout(flipTimer);
 });
@@ -150,7 +185,8 @@ watch(currentManualPage, preloadManualSpread, { immediate: true });
             v-for="document in secondaryDocuments"
             :key="document.title"
             v-reveal="document.reveal"
-            class="document-row">
+            class="document-row"
+            :style="{ '--accent': documentAccent(document) }">
             <div class="document-row__icon">
               <component :is="document.icon" class="icon-spin-hover" aria-hidden="true" />
             </div>
@@ -184,18 +220,28 @@ watch(currentManualPage, preloadManualSpread, { immediate: true });
       </section>
 
       <section class="manual-flipbook" aria-labelledby="manual-flipbook-title">
-        <div class="manual-flipbook__header">
-          <div>
-            <p class="section-kicker">Manual de convivencia</p>
-            <h2 id="manual-flipbook-title">Lectura tipo libro</h2>
-          </div>
-
-          <span class="manual-flipbook__counter">{{ currentManualRange }}</span>
+        <div v-reveal="'up'" class="manual-flipbook__header">
+          <p class="section-kicker">Manual de convivencia</p>
+          <h2 id="manual-flipbook-title">Lectura tipo libro</h2>
+          <p class="manual-flipbook__lead">
+            Hojea el manual página por página, salta a la sección que necesites o descárgalo completo.
+          </p>
+          <a
+            v-if="manualDocument?.downloadUrl"
+            :href="manualDocument.downloadUrl"
+            class="manual-flipbook__download">
+            <Download aria-hidden="true" />
+            Descargar manual completo
+          </a>
         </div>
 
         <div
           v-reveal="{ direction: 'up', delay: 160 }"
           class="manual-flipbook__stage"
+          tabindex="0"
+          role="region"
+          aria-label="Visor del Manual de convivencia. Usa las flechas izquierda y derecha para pasar las páginas."
+          @keydown="handleManualKeydown"
           :class="{
             'is-turning': isTurningPage,
             'is-next': flipDirection === 'next',
@@ -254,11 +300,32 @@ watch(currentManualPage, preloadManualSpread, { immediate: true });
               alt="">
           </div>
         </div>
+
+        <div class="manual-flipbook__controls">
+          <span class="manual-flipbook__counter" aria-live="polite">{{ currentManualRange }}</span>
+          <label class="manual-flipbook__slider">
+            <span class="visually-hidden">Ir a la página</span>
+            <input
+              type="range"
+              min="1"
+              :max="manualPageCount"
+              step="1"
+              :value="currentManualPage"
+              :style="{ '--progress': manualProgress }"
+              :disabled="isTurningPage"
+              @change="jumpToManualPage($event.target.value)">
+          </label>
+          <span class="manual-flipbook__hint">
+            <Keyboard aria-hidden="true" />
+            Usa ← → para pasar páginas
+          </span>
+        </div>
       </section>
 
       <section class="horizon-note">
+        <img class="horizon-note__crest" src="/images/escudo.webp" alt="" aria-hidden="true" />
         <div v-reveal="'left'" class="horizon-note__content">
-          <FileCheck2 aria-hidden="true" />
+          <span class="horizon-note__icon"><FileCheck2 aria-hidden="true" /></span>
           <div>
             <p class="section-kicker">Consulta oficial</p>
             <h2>Documentos vigentes y descargables</h2>
@@ -818,6 +885,410 @@ watch(currentManualPage, preloadManualSpread, { immediate: true });
   .manual-flipbook__arrow {
     height: 2.65rem;
     width: 2.65rem;
+  }
+}
+
+/* ---- Visual refresh: consistent fonts and components with the rest of the site ---- */
+.horizon-page {
+  font-family: 'Open Sans', Arial, sans-serif;
+  padding: 3.5rem 0 4.5rem;
+}
+
+.horizon-page h1,
+.horizon-page h2 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+}
+
+.section-kicker {
+  color: #8b6418;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+}
+
+.horizon-intro {
+  margin-bottom: 2.75rem;
+}
+
+.horizon-intro h1,
+.manual-flipbook__header h2 {
+  padding-bottom: .8rem;
+  position: relative;
+}
+
+.horizon-intro h1::after,
+.manual-flipbook__header h2::after {
+  background: #e5b54b;
+  border-radius: 2px;
+  bottom: 0;
+  content: "";
+  height: 4px;
+  left: 50%;
+  position: absolute;
+  transform: translateX(-50%);
+  width: 3.5rem;
+}
+
+.horizon-intro > p:last-child {
+  color: #42554f;
+  margin-top: 1rem;
+}
+
+/* Featured document (PEI). */
+.featured-document,
+.document-row {
+  border-radius: 18px;
+}
+
+.featured-document {
+  background:
+    radial-gradient(circle at 85% 10%, rgba(229, 181, 75, .28), transparent 40%),
+    linear-gradient(150deg, rgba(6, 45, 38, .96), rgba(18, 60, 53, .82) 60%, rgba(18, 60, 53, .7)),
+    url("/images/img_hero.webp") center / cover no-repeat;
+  box-shadow: 0 22px 48px rgba(18, 60, 53, .22);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.featured-document:hover {
+  box-shadow: 0 28px 56px rgba(18, 60, 53, .28);
+  transform: translateY(-4px);
+}
+
+.featured-document__stamp {
+  backdrop-filter: blur(6px);
+  margin: 1.75rem;
+}
+
+.featured-document__stamp span {
+  font-weight: 700;
+  letter-spacing: .06em;
+}
+
+.featured-document__content {
+  padding: 1.75rem 2rem 2rem;
+}
+
+.featured-document .section-kicker {
+  color: #f3d87c;
+}
+
+.featured-document h2 {
+  font-size: clamp(1.9rem, 4vw, 2.8rem);
+  line-height: 1.1;
+}
+
+/* Secondary documents (Manual, SIEE). */
+.documents-list {
+  gap: 1.25rem;
+}
+
+.document-row {
+  background: #fff;
+  border-left: 5px solid var(--accent, #07513e);
+  box-shadow: 0 14px 34px rgba(18, 60, 53, .09);
+  padding: 1.5rem;
+}
+
+.document-row:hover {
+  box-shadow: 0 22px 44px rgba(18, 60, 53, .16);
+  transform: translateY(-4px);
+}
+
+.document-row__icon {
+  background: color-mix(in srgb, var(--accent, #07513e) 14%, #fff);
+  border-radius: 14px;
+  color: var(--accent, #07513e);
+  transition: transform .3s ease;
+}
+
+.document-row:hover .document-row__icon {
+  transform: rotate(-8deg) scale(1.06);
+}
+
+.document-row__content span {
+  color: var(--accent, #07513e);
+  font-weight: 700;
+  letter-spacing: .06em;
+}
+
+.document-row h2 {
+  font-size: 1.3rem;
+}
+
+/* Buttons. */
+.document-actions a {
+  border: 2px solid #07513e;
+  border-radius: 999px;
+  color: #07513e;
+  font-weight: 700;
+  padding: 0 1.1rem;
+}
+
+.document-actions a:first-child {
+  background: #07513e;
+  color: #fff;
+}
+
+.document-actions a:hover,
+.document-actions a:focus-visible {
+  background: #0b6a52;
+  border-color: #0b6a52;
+  color: #fff;
+}
+
+.document-actions--featured a {
+  background: rgba(255, 255, 255, .1);
+  border-color: rgba(255, 255, 255, .7);
+  color: #fff;
+}
+
+.document-actions--featured a:first-child {
+  background: #e5b54b;
+  border-color: #e5b54b;
+  color: #123c35;
+}
+
+.document-actions--featured a:hover,
+.document-actions--featured a:focus-visible {
+  background: #fff;
+  border-color: #fff;
+  color: #123c35;
+}
+
+.document-actions a:focus-visible {
+  outline: 3px solid #b3821c;
+  outline-offset: 2px;
+}
+
+/* Manual viewer. */
+.manual-flipbook {
+  margin-top: 4rem;
+}
+
+.manual-flipbook__header {
+  display: block;
+  margin: 0 auto 2rem;
+  max-width: 46rem;
+  text-align: center;
+}
+
+.manual-flipbook__header h2 {
+  font-size: clamp(1.75rem, 4vw, 2.4rem);
+}
+
+.manual-flipbook__lead {
+  color: #42554f;
+  line-height: 1.65;
+  margin: 1rem 0 0;
+}
+
+.manual-flipbook__download {
+  align-items: center;
+  background: #e5b54b;
+  border-radius: 999px;
+  color: #123c35;
+  display: inline-flex;
+  font-weight: 700;
+  gap: .45rem;
+  margin-top: 1.25rem;
+  padding: .7rem 1.3rem;
+  text-decoration: none;
+  transition: background .2s ease, transform .2s ease;
+}
+
+.manual-flipbook__download svg {
+  height: 1.05rem;
+  width: 1.05rem;
+}
+
+.manual-flipbook__download:hover,
+.manual-flipbook__download:focus-visible {
+  background: #f3d06f;
+  transform: translateY(-2px);
+}
+
+.manual-flipbook__stage {
+  border-radius: 20px;
+}
+
+.manual-flipbook__stage:focus-visible {
+  outline: 3px solid #b3821c;
+  outline-offset: 4px;
+}
+
+.manual-flipbook__arrow:focus-visible {
+  outline: 3px solid #123c35;
+  outline-offset: 3px;
+}
+
+.manual-flipbook__controls {
+  align-items: center;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  margin: 1.25rem auto 0;
+  max-width: 62rem;
+}
+
+.manual-flipbook__counter {
+  background: #07513e;
+  border-color: #07513e;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.manual-flipbook__slider input {
+  -webkit-appearance: none;
+  appearance: none;
+  background: linear-gradient(90deg, #e5b54b var(--progress, 0%), #dfe7de var(--progress, 0%));
+  border-radius: 999px;
+  cursor: pointer;
+  display: block;
+  height: .5rem;
+  width: 100%;
+}
+
+.manual-flipbook__slider input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background: #07513e;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(18, 60, 53, .35);
+  height: 1.35rem;
+  width: 1.35rem;
+}
+
+.manual-flipbook__slider input::-moz-range-thumb {
+  background: #07513e;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(18, 60, 53, .35);
+  height: 1.1rem;
+  width: 1.1rem;
+}
+
+.manual-flipbook__slider input:focus-visible {
+  outline: 3px solid #b3821c;
+  outline-offset: 4px;
+}
+
+.manual-flipbook__hint {
+  align-items: center;
+  color: #5b6d62;
+  display: inline-flex;
+  font-size: .82rem;
+  gap: .4rem;
+  white-space: nowrap;
+}
+
+.manual-flipbook__hint svg {
+  height: 1rem;
+  width: 1rem;
+}
+
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+/* Closing banner. */
+.horizon-note {
+  background: linear-gradient(135deg, #0b4a3d, #123c35 55%, #0d2f2a);
+  border-radius: 20px;
+  box-shadow: 0 18px 40px rgba(18, 60, 53, .2);
+  margin-top: 4rem;
+  overflow: hidden;
+  padding: 2.25rem;
+  position: relative;
+}
+
+.horizon-note__crest {
+  bottom: -4rem;
+  height: auto;
+  opacity: .08;
+  pointer-events: none;
+  position: absolute;
+  right: -3rem;
+  width: 18rem;
+}
+
+.horizon-note__content {
+  align-items: center;
+  gap: 1.25rem;
+  position: relative;
+}
+
+.horizon-note__icon {
+  align-items: center;
+  background: rgba(229, 181, 75, .18);
+  border: 1px solid rgba(229, 181, 75, .45);
+  border-radius: 16px;
+  color: #f3d87c;
+  display: flex;
+  flex-shrink: 0;
+  height: 4rem;
+  justify-content: center;
+  width: 4rem;
+}
+
+.horizon-note__icon svg {
+  height: 2rem;
+  width: 2rem;
+}
+
+.horizon-note .section-kicker {
+  color: #f3d87c;
+}
+
+.horizon-note h2 {
+  font-size: clamp(1.4rem, 3vw, 1.85rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .featured-document,
+  .document-row__icon,
+  .manual-flipbook__download {
+    transition: none;
+  }
+
+  .featured-document:hover,
+  .document-row:hover .document-row__icon,
+  .manual-flipbook__download:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .manual-flipbook__controls {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+  }
+
+  .manual-flipbook__slider {
+    width: 100%;
+  }
+
+  .manual-flipbook__hint {
+    display: none;
+  }
+
+  .horizon-note {
+    padding: 1.5rem;
+  }
+
+  .horizon-note__content {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .featured-document__content {
+    padding: 1.25rem 1.25rem 1.5rem;
   }
 }
 </style>
