@@ -1,6 +1,8 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import ContactPage from '../pages/ContactPage.vue';
 import EducationOfferPage from '../pages/EducationOfferPage.vue';
+import GalleryAlbumPage from '../pages/GalleryAlbumPage.vue';
+import GalleryPage from '../pages/GalleryPage.vue';
 import HomePage from '../pages/HomePage.vue';
 import InstitutionPage from '../pages/InstitutionPage.vue';
 import NewsDetailPage from '../pages/NewsDetailPage.vue';
@@ -83,6 +85,26 @@ export const router = createRouter({
         heroSubtitle: 'Información institucional ampliada para la comunidad educativa.',
         heroEyebrow: 'Actualidad institucional',
         heroWave: '#fff'
+      }
+    },
+    {
+      path: '/galeria',
+      name: 'gallery',
+      component: GalleryPage,
+      meta: {
+        heroTitle: 'Galería',
+        heroSubtitle: 'Fotos de las actividades institucionales, organizadas por evento.',
+        heroEyebrow: 'Momentos IEPRAV'
+      }
+    },
+    {
+      path: '/galeria/:slug',
+      name: 'gallery-album',
+      component: GalleryAlbumPage,
+      meta: {
+        heroTitle: 'Álbum de fotos',
+        heroSubtitle: 'Imágenes de una actividad de la comunidad educativa.',
+        heroEyebrow: 'Galería institucional'
       }
     },
     {

@@ -1,7 +1,22 @@
 const SPREADSHEET_ID = '1BHBBChjhY6QFS1APWZ0s9Zh2pYi_GOYAl4ehHiVgFjI';
 const SHEET_NAME = '';
 
+// Rendimiento: la respuesta completa se guarda en caché unos minutos y cada foto
+// se comparte en Drive solo una vez por periodo, no en cada visita al sitio.
+const RESPONSE_CACHE_SECONDS = 300; // 5 minutos: tiempo máximo para ver una noticia nueva.
+const SHARED_FILE_CACHE_SECONDS = 21600; // 6 horas (máximo permitido por CacheService).
+const RESPONSE_CACHE_KEY = 'news-response-v2';
+
 function doGet(e) {
+  const forceRefresh = e?.parameter?.nocache === '1';
+
+  if (!isDebugRequest(e) && !isSharingDebugRequest(e) && !forceRefresh) {
+    const cached = readChunkedCache(RESPONSE_CACHE_KEY);
+    if (cached) {
+      return ContentService.createTextOutput(cached).setMimeType(ContentService.MimeType.JSON);
+    }
+  }
+
   const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
   const sheet = SHEET_NAME
     ? spreadsheet.getSheetByName(SHEET_NAME)
@@ -33,10 +48,54 @@ function doGet(e) {
   }
 
   const news = readNews(values);
+  const payload = JSON.stringify({ news });
+  writeChunkedCache(RESPONSE_CACHE_KEY, payload, RESPONSE_CACHE_SECONDS);
 
   return ContentService
-    .createTextOutput(JSON.stringify({ news }))
+    .createTextOutput(payload)
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+// Ejecutar a mano desde el editor para que una noticia nueva aparezca de inmediato.
+function limpiarCache() {
+  CacheService.getScriptCache().remove(`${RESPONSE_CACHE_KEY}:count`);
+  Logger.log('Caché de noticias limpiada.');
+}
+
+// CacheService admite máximo 100 KB por valor: el JSON se guarda en partes.
+function writeChunkedCache(key, text, seconds) {
+  try {
+    const cache = CacheService.getScriptCache();
+    const chunkSize = 90000;
+    const entries = {};
+    let count = 0;
+
+    for (let start = 0; start < text.length; start += chunkSize) {
+      entries[`${key}:${count}`] = text.slice(start, start + chunkSize);
+      count += 1;
+    }
+
+    entries[`${key}:count`] = String(count);
+    cache.putAll(entries, seconds);
+  } catch (error) {
+    console.warn(`No fue posible guardar la caché: ${error}`);
+  }
+}
+
+function readChunkedCache(key) {
+  try {
+    const cache = CacheService.getScriptCache();
+    const count = Number(cache.get(`${key}:count`) || 0);
+    if (!count) return '';
+
+    const keys = Array.from({ length: count }, (_, index) => `${key}:${index}`);
+    const parts = cache.getAll(keys);
+    if (keys.some((partKey) => parts[partKey] === undefined)) return '';
+
+    return keys.map((partKey) => parts[partKey]).join('');
+  } catch (error) {
+    return '';
+  }
 }
 
 function readNews(values) {
@@ -77,9 +136,7 @@ function readNews(values) {
         ['explique_de_manera_breve', 'como_se_desarrollo', 'momentos_principales', 'columna_20', 'cuerpo', 'contenido', 'descripcion']
       );
       const newsBody = body || summary;
-      const imageSource = getValue(item, ['imagen_url', 'imagen', 'foto'], ['imagen_url', 'imagen', 'foto']);
-      const evidenceSource = getValue(item, ['evidencias_significativas'], ['evidencias', 'significativas']);
-      const gallery = getImageGallery([imageSource, evidenceSource]);
+      const gallery = getImageGallery(getImageColumnValues(item));
 
       return {
         id: item.id || `noticia-${index + 1}`,
@@ -133,6 +190,15 @@ function getValue(item, exactKeys, partialKeys) {
   return '';
 }
 
+// Toma todas las columnas de fotos: "Evidencias significativas", "Más fotos", "Imagen", etc.
+// Así se pueden agregar varias preguntas de carga al formulario (Forms permite máximo 10 archivos por pregunta).
+function getImageColumnValues(item) {
+  return Object.keys(item)
+    .filter((key) => /evidencia|foto|imagen/.test(key) && !key.includes('alt'))
+    .map((key) => item[key])
+    .filter(Boolean);
+}
+
 function getImageGallery(values) {
   const imageUrls = values
     .flatMap(getEvidenceUrls)
@@ -157,9 +223,7 @@ function readSharingDiagnostics(values) {
       }, {});
 
       const title = getValue(item, ['titulo', 'title', 'titulo_de_la_noticia'], ['titulo']) || `Noticia ${index + 1}`;
-      const imageSource = getValue(item, ['imagen_url', 'imagen', 'foto'], ['imagen_url', 'imagen', 'foto']);
-      const evidenceSource = getValue(item, ['evidencias_significativas'], ['evidencias', 'significativas']);
-      const fileIds = [...new Set([imageSource, evidenceSource]
+      const fileIds = [...new Set(getImageColumnValues(item)
         .flatMap(getEvidenceUrls)
         .map(extractDriveId)
         .filter(Boolean))];
@@ -223,14 +287,30 @@ function getImageUrl(value) {
   return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1200`;
 }
 
+// Comprueba que el archivo sea una imagen y lo comparte como "Cualquier persona con el enlace".
+// El resultado se recuerda en caché para no consultar Drive en cada visita.
 function isDriveImage(fileId) {
+  const cache = CacheService.getScriptCache();
+  const cacheKey = `drive-image:${fileId}`;
+  const cached = cache.get(cacheKey);
+
+  if (cached === '1') return true;
+  if (cached === '0') return false;
+
   try {
     const file = DriveApp.getFileById(fileId);
     const mimeType = String(file.getMimeType() || '').toLowerCase();
 
-    if (!mimeType.startsWith('image/')) return false;
+    if (!mimeType.startsWith('image/')) {
+      cache.put(cacheKey, '0', SHARED_FILE_CACHE_SECONDS);
+      return false;
+    }
 
-    file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+    if (file.getSharingAccess() !== DriveApp.Access.ANYONE_WITH_LINK) {
+      file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+    }
+
+    cache.put(cacheKey, '1', SHARED_FILE_CACHE_SECONDS);
     return true;
   } catch (error) {
     console.warn(`No fue posible validar/publicar la imagen ${fileId}: ${error}`);

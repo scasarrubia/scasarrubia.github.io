@@ -6,25 +6,28 @@ import {
   ArrowRight,
   CalendarDays,
   Check,
-  ChevronLeft,
-  ChevronRight,
   Clock,
+  Images,
   Link2,
   MessageCircle,
   Newspaper,
   UserRound
 } from '@lucide/vue';
+import PhotoLightbox from '../components/shared/PhotoLightbox.vue';
 import { useNews } from '../composables/useNews';
+import { sizedImage } from '../utils/driveImage';
 
 const route = useRoute();
 const { isLoading, newsItems } = useNews();
 const news = computed(() => newsItems.value.find((item) => item.slug === route.params.slug));
-const activeGalleryIndex = ref(0);
 const linkCopied = ref(false);
-let galleryInterval;
+const openPhoto = ref(null);
 let copiedTimer;
 
-const activeGalleryImage = computed(() => news.value?.gallery?.[activeGalleryIndex.value] || '');
+// The article shows only a few photos; the full set lives in the gallery album.
+const PREVIEW_PHOTOS = 4;
+const previewPhotos = computed(() => (news.value?.gallery ?? []).slice(0, PREVIEW_PHOTOS));
+const hiddenPhotoCount = computed(() => Math.max((news.value?.gallery?.length ?? 0) - PREVIEW_PHOTOS, 0));
 const urlPattern = /(https?:\/\/[^\s<>"']+)/g;
 
 const relatedNews = computed(() => newsItems.value.filter((item) => item.slug !== news.value?.slug).slice(0, 3));
@@ -122,52 +125,11 @@ function useFallbackImage(event) {
   event.target.src = '/images/img_hero_1.webp';
 }
 
-function stopGalleryAutoplay() {
-  window.clearInterval(galleryInterval);
-}
-
-function startGalleryAutoplay() {
-  stopGalleryAutoplay();
-
-  if (!news.value?.gallery || news.value.gallery.length <= 1) return;
-
-  galleryInterval = window.setInterval(() => {
-    activeGalleryIndex.value = (activeGalleryIndex.value + 1) % news.value.gallery.length;
-  }, 5200);
-}
-
-function showGalleryImage(index) {
-  activeGalleryIndex.value = index;
-  startGalleryAutoplay();
-}
-
-function showPreviousGalleryImage() {
-  if (!news.value?.gallery?.length) return;
-
-  activeGalleryIndex.value = activeGalleryIndex.value === 0
-    ? news.value.gallery.length - 1
-    : activeGalleryIndex.value - 1;
-  startGalleryAutoplay();
-}
-
-function showNextGalleryImage() {
-  if (!news.value?.gallery?.length) return;
-
-  activeGalleryIndex.value = (activeGalleryIndex.value + 1) % news.value.gallery.length;
-  startGalleryAutoplay();
-}
-
-watch(
-  () => news.value?.slug,
-  () => {
-    activeGalleryIndex.value = 0;
-    startGalleryAutoplay();
-  },
-  { immediate: true }
-);
+watch(() => news.value?.slug, () => {
+  openPhoto.value = null;
+});
 
 onBeforeUnmount(() => {
-  stopGalleryAutoplay();
   window.clearTimeout(copiedTimer);
 });
 </script>
@@ -244,54 +206,36 @@ onBeforeUnmount(() => {
           </p>
         </div>
 
-        <section v-if="news.gallery.length > 1" class="article__gallery" aria-label="Galería de la noticia">
+        <section v-if="news.gallery.length > 1" class="article__gallery" aria-labelledby="article-photos-title">
           <div class="article__section-heading">
             <p class="section-kicker">Galería</p>
-            <h2>Momentos de la actividad</h2>
+            <h2 id="article-photos-title">Momentos de la actividad</h2>
           </div>
 
-          <div class="gallery">
-            <div class="gallery__frame">
-              <Transition name="gallery-fade" mode="out-in">
-                <img
-                  :key="activeGalleryImage"
-                  :src="activeGalleryImage"
-                  :alt="`${news.title} - imagen ${activeGalleryIndex + 1}`"
-                  loading="lazy"
-                  decoding="async"
-                  @error="useFallbackImage">
-              </Transition>
-              <span class="gallery__counter">{{ activeGalleryIndex + 1 }} / {{ news.gallery.length }}</span>
-
-              <button
-                type="button"
-                class="gallery__arrow gallery__arrow--previous"
-                aria-label="Ver imagen anterior"
-                @click="showPreviousGalleryImage">
-                <ChevronLeft aria-hidden="true" />
-              </button>
-              <button
-                type="button"
-                class="gallery__arrow gallery__arrow--next"
-                aria-label="Ver imagen siguiente"
-                @click="showNextGalleryImage">
-                <ChevronRight aria-hidden="true" />
-              </button>
-            </div>
-
-            <div class="gallery__thumbs" role="group" aria-label="Seleccionar imagen de la galería">
-              <button
-                v-for="(image, index) in news.gallery"
-                :key="image"
-                type="button"
-                :class="{ 'gallery__thumb--active': activeGalleryIndex === index }"
-                :aria-label="`Ver imagen ${index + 1}`"
-                :aria-pressed="activeGalleryIndex === index"
-                @click="showGalleryImage(index)">
-                <img :src="image" alt="" loading="lazy" decoding="async" @error="useFallbackImage">
-              </button>
-            </div>
+          <div class="photo-preview" :class="`photo-preview--${previewPhotos.length}`">
+            <button
+              v-for="(photo, index) in previewPhotos"
+              :key="photo"
+              type="button"
+              class="photo-preview__item"
+              :aria-label="`Ampliar foto ${index + 1} de ${news.gallery.length}`"
+              @click="openPhoto = index">
+              <img :src="sizedImage(photo, index === 0 ? 900 : 500)" alt="" loading="lazy" decoding="async" @error="useFallbackImage">
+              <span
+                v-if="hiddenPhotoCount && index === previewPhotos.length - 1"
+                class="photo-preview__more"
+                aria-hidden="true">+{{ hiddenPhotoCount }}</span>
+            </button>
           </div>
+
+          <div class="article__gallery-actions">
+            <RouterLink :to="`/galeria/${news.slug}`" class="article__gallery-link">
+              <Images aria-hidden="true" />
+              Ver las {{ news.gallery.length }} fotos en la galería
+            </RouterLink>
+          </div>
+
+          <PhotoLightbox v-model="openPhoto" :images="news.gallery" :title="news.title" />
         </section>
 
         <footer class="article__footer">
@@ -576,136 +520,104 @@ onBeforeUnmount(() => {
   width: 3rem;
 }
 
-/* ---- Gallery ---- */
+/* ---- Photo preview ---- */
 .article__gallery {
   margin: 3.5rem auto 0;
-  max-width: 62rem;
+  max-width: 56rem;
 }
 
-.gallery {
-  background: linear-gradient(150deg, #0b4a3d, #123c35 60%, #0d2f2a);
-  border-radius: 22px;
-  box-shadow: 0 20px 44px rgba(18, 60, 53, .2);
+.photo-preview {
+  display: grid;
+  gap: .6rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 9rem));
+}
+
+.photo-preview__item {
+  background: #e7ede5;
+  border: 0;
+  border-radius: 14px;
+  cursor: zoom-in;
   overflow: hidden;
-  padding: 1.25rem;
-}
-
-.gallery__frame {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  min-height: 18rem;
+  padding: 0;
   position: relative;
 }
 
-.gallery__frame > img {
-  border-radius: 12px;
+.photo-preview__item img {
   display: block;
-  max-height: min(32rem, 62vh);
-  object-fit: contain;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .5s ease;
   width: 100%;
 }
 
-.gallery__counter {
-  background: rgba(0, 0, 0, .45);
-  border-radius: 999px;
-  color: #fff;
-  font-size: .8rem;
-  font-weight: 700;
-  padding: .3rem .75rem;
-  position: absolute;
-  right: .75rem;
-  top: .75rem;
+.photo-preview__item:hover img,
+.photo-preview__item:focus-visible img {
+  transform: scale(1.06);
 }
 
-.gallery__arrow {
-  align-items: center;
-  background: rgba(229, 181, 75, .95);
-  border: 0;
-  border-radius: 50%;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, .3);
-  color: #123c35;
-  cursor: pointer;
-  display: inline-flex;
-  height: 2.75rem;
-  justify-content: center;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  transition: background .2s ease, transform .2s ease;
-  width: 2.75rem;
-}
-
-.gallery__arrow:hover,
-.gallery__arrow:focus-visible {
-  background: #fff;
-  transform: translateY(-50%) scale(1.08);
-}
-
-.gallery__arrow:focus-visible {
-  outline: 3px solid #fff;
+.photo-preview__item:focus-visible {
+  outline: 3px solid #b3821c;
   outline-offset: 3px;
 }
 
-.gallery__arrow svg {
-  height: 1.4rem;
-  width: 1.4rem;
+/* Layouts by number of photos: the first one is always the largest. */
+.photo-preview--2 .photo-preview__item,
+.photo-preview--3 .photo-preview__item:first-child,
+.photo-preview--4 .photo-preview__item:first-child {
+  grid-column: span 2;
+  grid-row: span 2;
 }
 
-.gallery__arrow--previous {
-  left: .75rem;
+.photo-preview--3 .photo-preview__item:not(:first-child) {
+  grid-column: span 2;
 }
 
-.gallery__arrow--next {
-  right: .75rem;
+.photo-preview--4 .photo-preview__item:nth-child(2) {
+  grid-column: span 2;
 }
 
-.gallery__thumbs {
+.photo-preview__more {
+  align-items: center;
+  background: rgba(6, 45, 38, .68);
+  color: #fff;
   display: flex;
-  gap: .6rem;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  inset: 0;
   justify-content: center;
-  margin-top: 1rem;
-  overflow-x: auto;
-  padding: .25rem;
-  scrollbar-width: thin;
+  position: absolute;
 }
 
-.gallery__thumbs button {
-  background: transparent;
-  border: 2px solid rgba(255, 255, 255, .25);
-  border-radius: 10px;
-  cursor: pointer;
-  flex: 0 0 auto;
-  opacity: .65;
-  overflow: hidden;
-  padding: 0;
-  transition: border-color .2s ease, opacity .2s ease, transform .2s ease;
-  width: 4rem;
+.article__gallery-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
 }
 
-.gallery__thumbs button:hover,
-.gallery__thumbs button:focus-visible,
-.gallery__thumbs .gallery__thumb--active {
-  border-color: #e5b54b;
-  opacity: 1;
+.article__gallery-link {
+  align-items: center;
+  background: #07513e;
+  border-radius: 999px;
+  color: #fff;
+  display: inline-flex;
+  font-weight: 700;
+  gap: .5rem;
+  padding: .75rem 1.4rem;
+  text-decoration: none;
+  transition: background .2s ease, transform .2s ease;
+}
+
+.article__gallery-link svg {
+  height: 1.1rem;
+  width: 1.1rem;
+}
+
+.article__gallery-link:hover,
+.article__gallery-link:focus-visible {
+  background: #0b6a52;
   transform: translateY(-2px);
-}
-
-.gallery__thumbs img {
-  aspect-ratio: 1 / 1;
-  display: block;
-  object-fit: cover;
-  width: 100%;
-}
-
-.gallery-fade-enter-active,
-.gallery-fade-leave-active {
-  transition: opacity .3s ease;
-}
-
-.gallery-fade-enter-from,
-.gallery-fade-leave-to {
-  opacity: 0;
 }
 
 /* ---- Footer ---- */
@@ -946,13 +858,6 @@ onBeforeUnmount(() => {
     justify-content: center;
   }
 
-  .gallery {
-    padding: 1.5rem;
-  }
-
-  .gallery__frame {
-    min-height: 24rem;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -962,9 +867,7 @@ onBeforeUnmount(() => {
 
   .related__card,
   .related__media img,
-  .gallery__thumbs button,
-  .gallery-fade-enter-active,
-  .gallery-fade-leave-active {
+  .photo-preview__item img {
     transition: none;
   }
 
@@ -993,13 +896,8 @@ onBeforeUnmount(() => {
     font-size: 1.02rem;
   }
 
-  .gallery {
-    border-radius: 16px;
-    padding: .75rem;
-  }
-
-  .gallery__thumbs button {
-    width: 3.2rem;
+  .photo-preview {
+    grid-template-rows: repeat(2, minmax(0, 6.5rem));
   }
 }
 </style>

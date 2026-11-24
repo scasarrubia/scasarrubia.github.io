@@ -5,6 +5,7 @@ import {
   BookOpenText,
   ChevronRight,
   House,
+  Images,
   Landmark,
   Lightbulb,
   Menu,
@@ -20,7 +21,8 @@ const navLinks = [
   { name: 'our-people', label: 'Nuestra gente', to: '/nuestra-gente', icon: Users },
   { name: 'institutional-horizon', label: 'Horizonte institucional', to: '/horizonte-institucional', icon: BookOpenText },
   { name: 'projects', label: 'Proyectos', to: '/proyectos', icon: Lightbulb },
-  { name: 'news', label: 'Noticias', to: '/noticias', icon: Newspaper, also: ['news-detail'] }
+  { name: 'news', label: 'Noticias', to: '/noticias', icon: Newspaper, also: ['news-detail'] },
+  { name: 'gallery', label: 'Galería', to: '/galeria', icon: Images, also: ['gallery-album'] }
 ];
 
 const route = useRoute();
@@ -368,7 +370,7 @@ onBeforeUnmount(() => {
 }
 
 /* ---- Desktop ---- */
-@media (min-width: 1100px) {
+@media (min-width: 1240px) {
   .site-header__toggle {
     display: none;
   }
@@ -390,7 +392,7 @@ onBeforeUnmount(() => {
   .site-nav__list {
     align-items: center;
     flex-direction: row;
-    gap: .2rem;
+    gap: .1rem;
     padding: 0;
   }
 
@@ -402,9 +404,10 @@ onBeforeUnmount(() => {
   .site-nav__link {
     background: transparent;
     border-radius: 8px;
-    font-size: .93rem;
-    padding: .55rem .75rem;
+    font-size: .9rem;
+    padding: .55rem .6rem;
     text-shadow: 0 1px 6px rgba(0, 0, 0, .35);
+    white-space: nowrap;
   }
 
   /* Animated gold underline for hover and the current page. */
@@ -414,9 +417,9 @@ onBeforeUnmount(() => {
     bottom: .15rem;
     content: "";
     height: 2px;
-    left: .75rem;
+    left: .6rem;
     position: absolute;
-    right: .75rem;
+    right: .6rem;
     transform: scaleX(0);
     transition: transform .25s ease;
   }

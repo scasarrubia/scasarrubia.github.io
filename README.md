@@ -154,6 +154,15 @@ Para cambiar una API:
 
 No necesitas hacer pública la hoja de Sheets si Apps Script se ejecuta con una cuenta que puede leerla. Revisa que la respuesta de la API contenga solo la información destinada al portal.
 
+### Fotos de noticias y Galería
+
+La Galería (`/galeria`) no tiene una fuente propia: cada noticia con fotos se convierte en un álbum. Las fotos se suben en el formulario de noticias.
+
+- El script de noticias junta las imágenes de **todas** las columnas cuyo título contenga "evidencia", "foto" o "imagen". Google Forms admite máximo 10 archivos por pregunta de carga; para más fotos, agrega otra pregunta de carga (por ejemplo, "Más fotos (opcional)").
+- El script comparte cada foto como "Cualquier persona con el enlace" y lo recuerda en caché 6 horas. La respuesta completa se guarda en caché 5 minutos: una noticia nueva puede tardar hasta 5 minutos en aparecer. Para verla de inmediato, ejecuta la función `limpiarCache` desde el editor o abre la URL `/exec?nocache=1`.
+- El detalle de noticia muestra hasta 4 fotos y enlaza al álbum completo. Las miniaturas se piden a Drive en tamaño reducido y la foto grande solo se descarga al ampliarla.
+- `index.html` incluye `<meta name="referrer" content="no-referrer">`: sin ella, Google rechaza las fotos de Drive cuando se muestran en otro sitio.
+
 Los archivos de Drive enlazados desde el portal tienen permisos independientes. Para un documento destinado al público, configura **Compartir → Acceso general → Cualquier persona con el enlace → Lector**. Comprueba también que la descarga esté permitida si se ofrece ese botón. Las políticas de una cuenta institucional pueden limitar estas opciones.
 
 ## 8. Configuración de publicación y dominio

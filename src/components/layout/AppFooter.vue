@@ -12,6 +12,7 @@ const siteLinks = [
   { label: 'Horizonte institucional', to: '/horizonte-institucional' },
   { label: 'Proyectos', to: '/proyectos' },
   { label: 'Noticias', to: '/noticias' },
+  { label: 'Galería', to: '/galeria' },
   { label: 'Contacto', to: '/contacto' }
 ];
 
