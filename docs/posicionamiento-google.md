@@ -4,7 +4,7 @@ Nombre usado en el sitio: **Institución Educativa Padre Roberto Arroyave Vélez
 
 ## Preparación incluida
 
-La portada contiene título, descripción, URL canónica, metadatos para compartir y datos estructurados de tipo School. `public/robots.txt` permite el rastreo e indica el sitemap. `public/sitemap.xml` incluye únicamente la portada.
+La portada contiene título, descripción, URL canónica, metadatos para compartir y datos estructurados de tipo `WebSite` y `School`. El bloque `WebSite` indica a Google el nombre del sitio; sin él, los resultados mostraban "No-IP" (el proveedor del dominio). El título tiene 50 caracteres para que Google no lo corte. `public/robots.txt` permite el rastreo e indica el sitemap. `public/sitemap.xml` incluye únicamente la portada.
 
 El enrutador usa fragmentos (`/#/noticias`). Google desaconseja este mecanismo para descubrir páginas independientes. No agregar esas rutas al sitemap ni cambiar solamente a `createWebHistory()`: primero hay que preparar páginas HTML por ruta que GitHub Pages pueda servir con respuesta 200 al abrirlas directamente. Una siguiente mejora es generar páginas estáticas para institución, contacto y noticias; cada una debe tener contenido, título y URL canónica propios. Las noticias provenientes de Sheets necesitarán regeneración para mantener actualizadas esas páginas estáticas.
 

@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Google Drive photos (lh3.googleusercontent.com) refuse to load when the page sends its address as referrer. -->
     <meta name="referrer" content="no-referrer" />
-    <title>Institución Educativa Padre Roberto Arroyave Vélez | San Pedro de los Milagros</title>
-    <meta name="description" content="Institución Educativa Padre Roberto Arroyave Vélez, en San Pedro de los Milagros, Antioquia. Consulta noticias, proyectos, agenda y documentos institucionales." />
+    <title>Institución Educativa Padre Roberto Arroyave Vélez</title>
+    <meta name="description" content="Colegio oficial de San Pedro de los Milagros, Antioquia. Noticias, galería de fotos, proyectos, manual de convivencia y canales de contacto de la IEPRAV." />
     <link rel="canonical" href="https://ineprav.ddns.net/" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_CO" />
@@ -15,21 +15,40 @@
     <meta property="og:description" content="Noticias, proyectos, agenda y documentos de la comunidad educativa de San Pedro de los Milagros, Antioquia." />
     <meta property="og:url" content="https://ineprav.ddns.net/" />
     <meta property="og:image" content="https://ineprav.ddns.net/images/escudo.webp" />
+    <!-- WebSite tells Google which site name to show in results (otherwise it falls back to the domain provider, No-IP). -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "School",
-        "@id": "https://ineprav.ddns.net/#institucion",
-        "name": "Institución Educativa Padre Roberto Arroyave Vélez",
-        "alternateName": "IEPRAV",
-        "url": "https://ineprav.ddns.net/",
-        "logo": "https://ineprav.ddns.net/images/escudo.webp",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "San Pedro de los Milagros",
-          "addressRegion": "Antioquia",
-          "addressCountry": "CO"
-        }
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://ineprav.ddns.net/#sitio",
+            "name": "Institución Educativa Padre Roberto Arroyave Vélez",
+            "alternateName": ["IEPRAV", "I.E. Padre Roberto Arroyave Vélez"],
+            "url": "https://ineprav.ddns.net/",
+            "inLanguage": "es-CO",
+            "publisher": { "@id": "https://ineprav.ddns.net/#institucion" }
+          },
+          {
+            "@type": "School",
+            "@id": "https://ineprav.ddns.net/#institucion",
+            "name": "Institución Educativa Padre Roberto Arroyave Vélez",
+            "alternateName": "IEPRAV",
+            "url": "https://ineprav.ddns.net/",
+            "logo": "https://ineprav.ddns.net/images/escudo.webp",
+            "image": "https://ineprav.ddns.net/images/escudo.webp",
+            "telephone": "+57 604 868 7124",
+            "email": "ieproberto.01@gmail.com",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Calle 46 No. 50-225, Barrio San José",
+              "addressLocality": "San Pedro de los Milagros",
+              "addressRegion": "Antioquia",
+              "addressCountry": "CO"
+            },
+            "sameAs": ["https://www.facebook.com/p/Institucion-Educativa-Padre-Roberto-Arroyave-Velez-100039734155514/"]
+          }
+        ]
       }
     </script>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=20260712" />
