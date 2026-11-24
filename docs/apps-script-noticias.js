@@ -104,6 +104,7 @@ function readNews(values) {
   if (!headers || !headers.length) return [];
 
   const normalizedHeaders = headers.map(normalizeKey);
+  const usedSlugs = new Set();
 
   return rows
     .map((row, index) => {
@@ -140,7 +141,7 @@ function readNews(values) {
 
       return {
         id: item.id || `noticia-${index + 1}`,
-        slug: item.slug || createSlug(title || `noticia-${index + 1}`),
+        slug: uniqueSlug(item.slug || createSlug(title || `noticia-${index + 1}`), usedSlugs),
         title,
         category: getValue(item, ['categoria', 'category', 'periodo'], ['categoria', 'periodo']) || 'Institucional',
         date: getValue(item, ['fecha', 'fecha_de_realizacion', 'marca_temporal', 'timestamp'], ['fecha_de_realizacion', 'fecha', 'marca_temporal']) || '',
@@ -363,6 +364,21 @@ function createSlug(value) {
     .replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
+}
+
+// Dos noticias con el mismo título tendrían la misma dirección: se numeran (-2, -3...)
+// en el orden de las filas de la hoja, así la dirección no cambia al agregar noticias nuevas.
+function uniqueSlug(slug, usedSlugs) {
+  let candidate = slug;
+  let counter = 2;
+
+  while (usedSlugs.has(candidate)) {
+    candidate = `${slug}-${counter}`;
+    counter += 1;
+  }
+
+  usedSlugs.add(candidate);
+  return candidate;
 }
 
 function createExcerpt(value) {

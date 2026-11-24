@@ -102,6 +102,25 @@ function normalizeNewsItem(item, index) {
   };
 }
 
+// Repeated titles would produce the same URL and hide one of the news items.
+// Number duplicates (-2, -3...) in sheet order so existing links stay stable.
+function ensureUniqueSlugs(items) {
+  const usedSlugs = new Set();
+
+  return items.map((item) => {
+    let slug = item.slug;
+    let counter = 2;
+
+    while (usedSlugs.has(slug)) {
+      slug = `${item.slug}-${counter}`;
+      counter += 1;
+    }
+
+    usedSlugs.add(slug);
+    return slug === item.slug ? item : { ...item, slug };
+  });
+}
+
 async function fetchNews() {
   if (!newsUrl) return localNewsItems;
 
@@ -123,8 +142,7 @@ export function useNews() {
 
     pendingNewsRequest = (async () => {
       const loadedNews = await fetchNews();
-      const normalizedNews = loadedNews
-        .map(normalizeNewsItem)
+      const normalizedNews = ensureUniqueSlugs(loadedNews.map(normalizeNewsItem))
         .filter((item) => item.title && item.active)
         .sort(compareNewsNewestFirst);
 
