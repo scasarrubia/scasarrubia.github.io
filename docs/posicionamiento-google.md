@@ -23,7 +23,7 @@ El enrutador usa fragmentos (`/#/noticias`). Google desaconseja este mecanismo p
 ## Contenido y presencia institucional
 
 - Usar el mismo nombre completo y municipio en la portada, contacto y perfiles institucionales.
-- Completar y confirmar dirección, teléfono y canales de atención. Actualmente la página de contacto tiene contenido provisional y su formulario no envía mensajes; debe resolverse antes de anunciarlo como canal de atención.
+- Mantener actualizados dirección, teléfono, correo y canales de atención. La página de contacto muestra canales directos (teléfono, correo, dirección con mapa y Facebook); no tiene formulario.
 - Mantener noticias originales con títulos descriptivos, fecha y contexto de las actividades.
 - Solicitar que los perfiles y directorios oficiales de la institución, la Alcaldía y entidades educativas enlacen al dominio correcto cuando corresponda.
 - Si existe un perfil de la institución en Google Maps, comprobar que su web sea la correcta mediante una cuenta autorizada.

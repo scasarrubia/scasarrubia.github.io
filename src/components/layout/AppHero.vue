@@ -90,12 +90,6 @@ onBeforeUnmount(() => {
     <div class="app-hero__body">
       <div class="app-hero__content">
         <template v-if="isHomePage">
-          <img
-            v-reveal="{ direction: 'zoom', delay: 0 }"
-            class="app-hero__crest"
-            src="/images/escudo.webp"
-            alt=""
-            aria-hidden="true" />
           <p v-reveal="{ direction: 'down', delay: 100 }" class="app-hero__eyebrow">
             {{ heroContent.eyebrow }}
           </p>
@@ -244,14 +238,6 @@ onBeforeUnmount(() => {
 
 .app-hero--home .app-hero__body {
   padding-bottom: 9rem;
-}
-
-.app-hero__crest {
-  display: block;
-  filter: drop-shadow(0 .6rem 1.2rem rgba(0, 0, 0, .35));
-  height: auto;
-  margin: 0 auto 1.25rem;
-  width: clamp(4.5rem, 9vw, 6.5rem);
 }
 
 .app-hero__actions {
