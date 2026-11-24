@@ -1,6 +1,9 @@
 <script setup>
-import { CalendarDays, ChevronDown, ExternalLink, MonitorCheck, RefreshCw } from '@lucide/vue';
+import { CalendarDays, ChevronDown, RefreshCw } from '@lucide/vue';
 import EducationalExplorer from '../components/home/EducationalExplorer.vue';
+import LatestNews from '../components/home/LatestNews.vue';
+import ParallaxBand from '../components/home/ParallaxBand.vue';
+import QuickAccess from '../components/home/QuickAccess.vue';
 import SchoolCalendar from '../components/home/SchoolCalendar.vue';
 import { useWeeklyAgenda } from '../composables/useWeeklyAgenda';
 
@@ -27,23 +30,11 @@ function getAgendaActivityParts(activity) {
 
 <template>
   <main class="home-preview">
+    <QuickAccess />
+    <LatestNews />
+    <ParallaxBand />
     <EducationalExplorer />
-    <section class="home-access" aria-labelledby="educacity-title">
-      <div class="home-access__banner">
-        <div class="home-access__copy">
-          <MonitorCheck class="home-access__icon" aria-hidden="true" />
-          <div>
-            <p class="home-eyebrow">Plataforma académica</p>
-            <h2 id="educacity-title">Acceso a Educacity</h2>
-            <p>Consulta actividades, tareas, calificaciones y procesos académicos institucionales.</p>
-          </div>
-        </div>
-        <a href="https://padreroberto.educa.city/" target="_blank" rel="noopener noreferrer" class="home-access__button">
-          Ingresar a Educacity <ExternalLink aria-hidden="true" />
-        </a>
-      </div>
-    </section>
-    <div class="home-planning">
+    <div v-reveal="'up'" class="home-planning">
       <section class="home-agenda" aria-labelledby="agenda-semanal-title">
         <header class="home-agenda__header">
           <div>
@@ -94,18 +85,8 @@ function getAgendaActivityParts(activity) {
 .home-preview { background: #f7f8f4; color: #203c34; font-family: 'Open Sans', Arial, sans-serif; font-size: 1rem; line-height: 1.65; }
 .home-preview, .home-preview :deep(*), .home-preview :deep(*::before), .home-preview :deep(*::after) { box-sizing: border-box; }
 .home-preview h2, .home-preview h3 { font-family: Georgia, 'Times New Roman', serif; }
-.home-access, .home-planning { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
-.home-access__banner { background: linear-gradient(110deg, #064b3c, #1e6350); color: white; border-radius: 14px; padding: 1.75rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; box-shadow: 0 8px 24px #123c3510; }
-.home-access__copy { display: flex; align-items: center; gap: 1.5rem; max-width: 100%; }
-.home-access__copy, .home-access__copy > div { min-width: 0; }
-.home-access__icon { width: 3.25rem; height: 3.25rem; flex-shrink: 0; }
-.home-access h2 { color: white; margin: 0; font-size: clamp(1.6rem, 3vw, 2rem); line-height: 1.25; font-weight: 700; }
-.home-access p { margin: .45rem 0 0; }
+.home-planning { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
 .home-eyebrow { color: #8b6418; font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 .5rem; }
-.home-access .home-eyebrow { color: #f3d87c; margin: 0 0 .4rem; }
-.home-access__button { display: inline-flex; align-items: center; justify-content: center; gap: .65rem; flex-shrink: 0; color: #123c35; background: #e5c44b; border-radius: 8px; padding: .85rem 1.1rem; text-decoration: none; font-weight: 700; max-width: 100%; overflow-wrap: anywhere; }
-.home-access__button svg { width: 1.1rem; height: 1.1rem; flex-shrink: 0; }
-.home-access__button:hover { background: #f7dc78; }
 .home-planning { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); align-items: start; gap: 1.5rem; padding-top: 2.5rem; padding-bottom: 3.5rem; }
 .home-agenda, .home-calendar { min-width: 0; background: #fff; border: 1px solid #e0e7df; border-radius: 14px; box-shadow: 0 6px 22px #123c3509; }
 .home-agenda { padding: 1.5rem; }
@@ -139,17 +120,30 @@ function getAgendaActivityParts(activity) {
 .home-agenda__activity dd { margin: 0; white-space: pre-line; overflow-wrap: anywhere; }
 .home-agenda__error { border-left: 3px solid #a85a29; background: #fff5e9; padding: .75rem; font-size: .9rem; }
 .home-agenda__status { color: #5b6d62; padding: 1rem 0; }
+/* Visual depth for the planning cards. */
+.home-agenda, .home-calendar { transition: box-shadow .3s ease; }
+.home-agenda { border-top: 4px solid #07513e; }
+.home-calendar { border-top: 4px solid #e5b54b; }
+.home-agenda:hover, .home-calendar:hover { box-shadow: 0 18px 40px rgba(18, 60, 53, .12); }
+.home-agenda__day { transition: border-color .2s ease, box-shadow .2s ease; }
+.home-agenda__day:hover { border-color: #b9cdbb; box-shadow: 0 6px 16px rgba(18, 60, 53, .08); }
+.home-agenda__day summary { transition: background .2s ease, color .2s ease; }
+.home-agenda__day:not([open]) summary:hover { background: #e7f0e8; }
+.home-agenda__activity { border-left: 3px solid transparent; transition: background .2s ease, border-color .2s ease; }
+.home-agenda__activity:hover { background: #fbfcf9; border-left-color: #e5b54b; }
+.home-refresh { transition: background .2s ease, border-color .2s ease; }
+.home-refresh:hover:not(:disabled) { background: #e7f0e8; border-color: #b9cdbb; }
+.home-refresh:not(:disabled):hover svg { transform: rotate(180deg); transition: transform .4s ease; }
+@media (prefers-reduced-motion: reduce) {
+  .home-refresh:not(:disabled):hover svg { transform: none; }
+}
 .home-preview :is(a,button,summary):focus-visible { outline: 3px solid #b3821c; outline-offset: 4px; }
 @media (max-width: 900px) {
   .home-planning { grid-template-columns: minmax(0, 1fr); }
-  .home-access__banner { align-items: flex-start; flex-direction: column; }
 }
 @media (max-width: 520px) {
-  .home-access, .home-planning { padding-left: 1rem; padding-right: 1rem; }
-  .home-access__banner, .home-agenda { padding: 1.15rem; }
-  .home-access__copy { align-items: flex-start; gap: .8rem; }
-  .home-access__icon { width: 2rem; height: 2rem; }
-  .home-access__button { width: 100%; }
+  .home-planning { padding-left: 1rem; padding-right: 1rem; }
+  .home-agenda { padding: 1.15rem; }
   .home-agenda__count { display: none; }
 }
 </style>

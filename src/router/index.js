@@ -49,7 +49,8 @@ export const router = createRouter({
       meta: {
         heroTitle: 'Horizonte Institucional',
         heroSubtitle: 'Manual de convivencia, PEI y Sistema Institucional de Evaluación para consulta de la comunidad educativa.',
-        heroEyebrow: 'Documentos institucionales'
+        heroEyebrow: 'Documentos institucionales',
+        heroWave: '#fff'
       }
     },
     {
@@ -69,7 +70,8 @@ export const router = createRouter({
       meta: {
         heroTitle: 'Noticias y Comunicados',
         heroSubtitle: 'Un espacio para publicar novedades, circulares, galerías y momentos importantes de la comunidad educativa.',
-        heroEyebrow: 'Actualidad institucional'
+        heroEyebrow: 'Actualidad institucional',
+        heroWave: '#fff'
       }
     },
     {
@@ -79,7 +81,8 @@ export const router = createRouter({
       meta: {
         heroTitle: 'Detalle de Noticia',
         heroSubtitle: 'Información institucional ampliada para la comunidad educativa.',
-        heroEyebrow: 'Actualidad institucional'
+        heroEyebrow: 'Actualidad institucional',
+        heroWave: '#fff'
       }
     },
     {

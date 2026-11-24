@@ -19,7 +19,7 @@ const heroContent = computed(() => ({
 
 <template>
   <div :class="{ 'paginas-internas': isInnerPage }">
-    <AppHero :key="heroAnimationKey" :hero-content="heroContent" :is-home-page="isHomePage">
+    <AppHero :key="heroAnimationKey" :hero-content="heroContent" :is-home-page="isHomePage" :wave-color="route.meta.heroWave">
       <template #header>
         <AppHeader />
       </template>

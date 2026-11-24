@@ -11,7 +11,25 @@ const icons = {
   School
 };
 
+// Accent color per level: background, soft tint and readable text on the accent.
+const levelThemes = {
+  preescolar: { accent: '#e5b54b', soft: '#fbf3dc', ink: '#123c35' },
+  primaria: { accent: '#3f9b6a', soft: '#e3f3e9', ink: '#fff' },
+  secundaria: { accent: '#2f7fa6', soft: '#e1eff6', ink: '#fff' },
+  media: { accent: '#8a5aa8', soft: '#f1e8f6', ink: '#fff' }
+};
+
 const activeLevel = computed(() => learningLevels.find((level) => level.id === activeLevelId.value) ?? learningLevels[0]);
+
+function themeStyle(levelId) {
+  const theme = levelThemes[levelId] ?? levelThemes.preescolar;
+
+  return {
+    '--level-accent': theme.accent,
+    '--level-soft': theme.soft,
+    '--level-ink': theme.ink
+  };
+}
 </script>
 
 <template>
@@ -25,7 +43,7 @@ const activeLevel = computed(() => learningLevels.find((level) => level.id === a
         </p>
       </div>
 
-      <div class="learning-explorer__panel">
+      <div v-reveal="'up'" class="learning-explorer__panel" :style="themeStyle(activeLevel.id)">
         <div class="learning-explorer__tabs" role="tablist" aria-label="Niveles educativos">
           <button
             v-for="level in learningLevels"
@@ -33,15 +51,18 @@ const activeLevel = computed(() => learningLevels.find((level) => level.id === a
             type="button"
             class="learning-explorer__tab"
             :class="{ 'learning-explorer__tab--active': activeLevel.id === level.id }"
+            :style="themeStyle(level.id)"
             :aria-selected="activeLevel.id === level.id"
             role="tab"
             @click="activeLevelId = level.id">
+            <span class="learning-explorer__tab-dot" aria-hidden="true" />
             <component :is="icons[level.icon]" class="icon-spin-hover" aria-hidden="true" />
             <span>{{ level.name }}</span>
           </button>
         </div>
 
-        <div class="learning-explorer__content" role="tabpanel">
+        <Transition name="level-swap" mode="out-in">
+        <div :key="activeLevel.id" class="learning-explorer__content" role="tabpanel">
           <div class="learning-explorer__summary">
             <span class="learning-explorer__summary-icon">
               <component :is="icons[activeLevel.icon]" class="icon-spin-hover" aria-hidden="true" />
@@ -81,6 +102,7 @@ const activeLevel = computed(() => learningLevels.find((level) => level.id === a
             </article>
           </div>
         </div>
+        </Transition>
       </div>
     </div>
   </section>
@@ -88,7 +110,7 @@ const activeLevel = computed(() => learningLevels.find((level) => level.id === a
 
 <style scoped>
 .learning-explorer {
-  background: #f7f8f4;
+  background: #fff;
   color: #1f2f2b;
   padding: 3rem 0;
 }
@@ -297,6 +319,34 @@ const activeLevel = computed(() => learningLevels.find((level) => level.id === a
 }
 @media (min-width: 768px) and (max-width: 1050px) {
   .learning-explorer__areas { grid-template-columns: 1fr; }
+}
+/* Per-level color theme. */
+.learning-explorer__header h2 { position: relative; padding-bottom: .7rem; }
+.learning-explorer__header h2::after { content: ""; position: absolute; left: 50%; bottom: 0; width: 3.5rem; height: 4px; border-radius: 2px; background: #e5b54b; transform: translateX(-50%); }
+.learning-explorer__panel { border-top: 4px solid var(--level-accent); transition: border-color .35s ease; box-shadow: 0 16px 40px rgba(18, 60, 53, .1); }
+.learning-explorer__tab { cursor: pointer; position: relative; }
+.learning-explorer__tab:hover,
+.learning-explorer__tab:focus { background: rgba(255, 255, 255, .08); color: #fff; transform: translateX(.25rem); }
+.learning-explorer__tab:focus-visible { outline: 3px solid #f3d87c; outline-offset: -3px; }
+.learning-explorer__tab--active,
+.learning-explorer__tab--active:hover,
+.learning-explorer__tab--active:focus { background: var(--level-accent); color: var(--level-ink); transform: none; }
+.learning-explorer__tab-dot { width: .55rem; height: .55rem; border-radius: 50%; background: var(--level-accent); flex-shrink: 0; box-shadow: 0 0 0 3px rgba(255, 255, 255, .12); }
+.learning-explorer__tab--active .learning-explorer__tab-dot { background: var(--level-ink); box-shadow: none; }
+.learning-explorer__summary-icon { background: var(--level-soft); color: var(--level-accent); transition: background .35s ease, color .35s ease; }
+.learning-explorer__summary h3 { color: #123c35; font-family: Georgia, 'Times New Roman', serif; font-size: 1.4rem; }
+.learning-explorer__summary-link { background: var(--level-accent); color: var(--level-ink); }
+.learning-explorer__area { background: var(--level-soft); border-left-color: var(--level-accent); border-radius: 10px; }
+.learning-explorer__area:hover { box-shadow: 0 12px 26px rgba(18, 60, 53, .12); }
+.level-swap-enter-active,
+.level-swap-leave-active { transition: opacity .22s ease, transform .22s ease; }
+.level-swap-enter-from { opacity: 0; transform: translateY(.6rem); }
+.level-swap-leave-to { opacity: 0; transform: translateY(-.4rem); }
+@media (prefers-reduced-motion: reduce) {
+  .level-swap-enter-active,
+  .level-swap-leave-active { transition: none; }
+  .learning-explorer__tab:hover,
+  .learning-explorer__tab:focus { transform: none; }
 }
 @media (max-width: 600px) {
   .learning-explorer__container { padding: 0 1rem; }
