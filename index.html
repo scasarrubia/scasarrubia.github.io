@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Google Drive photos (lh3.googleusercontent.com) refuse to load when the page sends its address as referrer. -->
     <meta name="referrer" content="no-referrer" />
+    <!--
+      Content Security Policy: the browser only loads scripts from this site and data, images and frames
+      from the Google services the site uses. GitHub Pages does not allow custom headers, so it goes here.
+      Adding a new external service (another embed, images from another host) requires adding it below.
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://drive.google.com https://*.googleusercontent.com https://*.google.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://www.googleapis.com; frame-src https://drive.google.com https://docs.google.com https://www.google.com https://maps.google.com; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests"
+    />
     <title>Institución Educativa Padre Roberto Arroyave Vélez</title>
     <meta name="description" content="Colegio oficial de San Pedro de los Milagros, Antioquia. Noticias, galería de fotos, proyectos, manual de convivencia y canales de contacto de la IEPRAV." />
     <link rel="canonical" href="https://ineprav.ddns.net/" />

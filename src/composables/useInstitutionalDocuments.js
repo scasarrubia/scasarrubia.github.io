@@ -1,5 +1,6 @@
 import { computed, onMounted, ref } from 'vue';
 import { BookOpenCheck, Scale, ShieldCheck } from '@lucide/vue';
+import { safeUrl } from '../utils/safeUrl';
 
 const documentsUrl = import.meta.env.VITE_INSTITUTIONAL_DOCUMENTS_URL;
 
@@ -126,9 +127,9 @@ function normalizeDocument(documentItem, index) {
     id: documentItem.id || extractDriveId(sourceUrl) || `documento-${index + 1}`,
     title,
     fileId: documentItem.fileId || documentItem.file_id || extractDriveId(sourceUrl),
-    previewUrl: getDrivePreviewUrl(sourceUrl || documentItem.previewUrl || documentItem.preview_url),
-    viewUrl: documentItem.viewUrl || documentItem.view_url || sourceUrl,
-    downloadUrl: getDriveDownloadUrl(sourceUrl || documentItem.downloadUrl || documentItem.download_url),
+    previewUrl: safeUrl(getDrivePreviewUrl(sourceUrl || documentItem.previewUrl || documentItem.preview_url)),
+    viewUrl: safeUrl(documentItem.viewUrl || documentItem.view_url || sourceUrl),
+    downloadUrl: safeUrl(getDriveDownloadUrl(sourceUrl || documentItem.downloadUrl || documentItem.download_url)),
     active: documentItem.active ?? true,
     order: Number(documentItem.order || documentItem.orden || index + 1)
   };

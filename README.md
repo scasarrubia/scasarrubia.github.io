@@ -159,11 +159,27 @@ No necesitas hacer pública la hoja de Sheets si Apps Script se ejecuta con una 
 La Galería (`/galeria`) no tiene una fuente propia: cada noticia con fotos se convierte en un álbum. Las fotos se suben en el formulario de noticias.
 
 - El script de noticias junta las imágenes de **todas** las columnas cuyo título contenga "evidencia", "foto" o "imagen". Google Forms admite máximo 10 archivos por pregunta de carga; para más fotos, agrega otra pregunta de carga (por ejemplo, "Más fotos (opcional)").
-- El script comparte cada foto como "Cualquier persona con el enlace" y lo recuerda en caché 6 horas. La respuesta completa se guarda en caché 5 minutos: una noticia nueva puede tardar hasta 5 minutos en aparecer. Para verla de inmediato, ejecuta la función `limpiarCache` desde el editor o abre la URL `/exec?nocache=1`.
+- El script comparte cada foto como "Cualquier persona con el enlace" y lo recuerda en caché 6 horas. La respuesta completa se guarda en caché 5 minutos: una noticia nueva puede tardar hasta 5 minutos en aparecer. Para verla de inmediato, ejecuta la función `limpiarCache` desde el editor o abre la URL `/exec?nocache=1&token=TU_TOKEN` (ver "Diagnóstico de los scripts" más abajo).
 - El detalle de noticia muestra hasta 4 fotos y enlaza al álbum completo. Las miniaturas se piden a Drive en tamaño reducido y la foto grande solo se descarga al ampliarla.
 - `index.html` incluye `<meta name="referrer" content="no-referrer">`: sin ella, Google rechaza las fotos de Drive cuando se muestran en otro sitio.
 
 Los archivos de Drive enlazados desde el portal tienen permisos independientes. Para un documento destinado al público, configura **Compartir → Acceso general → Cualquier persona con el enlace → Lector**. Comprueba también que la descarga esté permitida si se ofrece ese botón. Las políticas de una cuenta institucional pueden limitar estas opciones.
+
+### Diagnóstico de los scripts
+
+Los scripts de noticias, alertas y horizonte institucional tienen un modo de diagnóstico (`?debug=1`) que muestra el nombre de la hoja, sus columnas y las primeras filas. Para que un desconocido no pueda verlo, solo funciona con una clave secreta:
+
+1. En el editor de Apps Script, abre **Configuración del proyecto → Propiedades del script → Agregar propiedad**.
+2. Nombre: `DEBUG_TOKEN`. Valor: una clave larga que solo conozca el administrador (por ejemplo, 20 letras y números al azar).
+3. Usa la clave así: `/exec?debug=1&token=TU_CLAVE`. En noticias también sirven `?debug=sharing&token=…` y `?nocache=1&token=…`.
+
+Si la propiedad no existe, el diagnóstico queda desactivado para todos y el sitio sigue funcionando igual.
+
+### Seguridad del sitio
+
+- `index.html` declara una política de seguridad de contenido (CSP): el navegador solo ejecuta código del propio sitio y solo carga datos, imágenes y marcos de los servicios de Google que usa el portal. Si se agrega un servicio nuevo (otro mapa, un video de YouTube, imágenes de otro sitio), hay que añadir su dominio en esa etiqueta o el navegador lo bloqueará.
+- Los enlaces escritos en las hojas (alertas, proyectos, documentos) pasan por `src/utils/safeUrl.js`, que descarta direcciones peligrosas como `javascript:`.
+- `.github/dependabot.yml` revisa cada mes las actualizaciones de librerías y acciones; las propuestas llegan como *pull requests* en GitHub.
 
 ## 8. Configuración de publicación y dominio
 

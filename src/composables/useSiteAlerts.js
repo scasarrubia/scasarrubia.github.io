@@ -1,4 +1,5 @@
 import { computed, onMounted, ref } from 'vue';
+import { safeUrl } from '../utils/safeUrl';
 
 const alertsUrl = import.meta.env.VITE_ALERTS_URL;
 const alerts = ref([]);
@@ -55,7 +56,7 @@ function normalizeAlert(item, index) {
     type: normalizeAlertType(item.type || item.tipo),
     startDate: item.startDate || item.fecha_inicio || item.inicio || item.desde || '',
     endDate: item.endDate || item.fecha_final || item.fecha_fin || item.fin || item.hasta || '',
-    link: item.link || item.enlace || item.url || '',
+    link: safeUrl(item.link || item.enlace || item.url),
     linkLabel: item.linkLabel || item.texto_boton || item.boton || 'Ver más',
     active: item.active ?? true,
     order: Number(item.order || item.orden || index + 1)

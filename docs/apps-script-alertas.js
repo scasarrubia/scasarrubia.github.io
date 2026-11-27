@@ -67,8 +67,16 @@ function readAlerts(values) {
     .sort((first, second) => first.order - second.order);
 }
 
+// Diagnostics (?debug=...) and ?nocache=1 only work with the secret token saved in
+// Project settings > Script properties as DEBUG_TOKEN, for example ?debug=1&token=YOUR_TOKEN.
+// Without the property, nobody can use them, so strangers cannot read the sheet or force heavy work.
+function hasDebugToken(e) {
+  const expected = PropertiesService.getScriptProperties().getProperty('DEBUG_TOKEN');
+  return Boolean(expected) && e?.parameter?.token === expected;
+}
+
 function isDebugRequest(e) {
-  return e?.parameter?.debug === '1';
+  return e?.parameter?.debug === '1' && hasDebugToken(e);
 }
 
 function getToday() {

@@ -8,7 +8,7 @@ const SHARED_FILE_CACHE_SECONDS = 21600; // 6 horas (máximo permitido por Cache
 const RESPONSE_CACHE_KEY = 'news-response-v2';
 
 function doGet(e) {
-  const forceRefresh = e?.parameter?.nocache === '1';
+  const forceRefresh = e?.parameter?.nocache === '1' && hasDebugToken(e);
 
   if (!isDebugRequest(e) && !isSharingDebugRequest(e) && !forceRefresh) {
     const cached = readChunkedCache(RESPONSE_CACHE_KEY);
@@ -159,12 +159,20 @@ function readNews(values) {
     .sort((first, second) => first.order - second.order);
 }
 
+// Diagnostics (?debug=...) and ?nocache=1 only work with the secret token saved in
+// Project settings > Script properties as DEBUG_TOKEN, for example ?debug=1&token=YOUR_TOKEN.
+// Without the property, nobody can use them, so strangers cannot read the sheet or force heavy work.
+function hasDebugToken(e) {
+  const expected = PropertiesService.getScriptProperties().getProperty('DEBUG_TOKEN');
+  return Boolean(expected) && e?.parameter?.token === expected;
+}
+
 function isDebugRequest(e) {
-  return e?.parameter?.debug === '1';
+  return e?.parameter?.debug === '1' && hasDebugToken(e);
 }
 
 function isSharingDebugRequest(e) {
-  return e?.parameter?.debug === 'sharing';
+  return e?.parameter?.debug === 'sharing' && hasDebugToken(e);
 }
 
 function autorizarPublicacionImagenes() {

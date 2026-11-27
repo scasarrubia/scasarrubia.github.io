@@ -1,5 +1,6 @@
 import { computed, onMounted, ref } from 'vue';
 import { localInstitutionalProjects } from '../constants/institutionalProjects';
+import { safeUrl } from '../utils/safeUrl';
 
 const projectsUrl = import.meta.env.VITE_PROJECTS_URL;
 
@@ -68,9 +69,9 @@ function normalizeProject(project, index) {
     category: project.category || project.categoria || 'Institucional',
     description: project.description || project.descripcion || 'Documento institucional disponible para consulta y descarga.',
     fileUrl,
-    previewUrl: project.previewUrl || project.preview_url || getDrivePreviewUrl(fileUrl),
-    downloadUrl: project.downloadUrl || project.download_url || getDriveDownloadUrl(fileUrl),
-    imageUrl: getDriveImageUrl(imageUrl),
+    previewUrl: safeUrl(project.previewUrl || project.preview_url || getDrivePreviewUrl(fileUrl)),
+    downloadUrl: safeUrl(project.downloadUrl || project.download_url || getDriveDownloadUrl(fileUrl)),
+    imageUrl: safeUrl(getDriveImageUrl(imageUrl)),
     active: project.active ?? true,
     order: Number(project.order || project.orden || index + 1)
   };
